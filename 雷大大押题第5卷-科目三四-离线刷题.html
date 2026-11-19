@@ -119,13 +119,14 @@ const key='leidada-2026-paper5-subject34-quiz-v1';
 const answerText={对:'正确',错:'错误'};
 const sorted=values=>[...values].sort().join('');
 const isCorrect=(q,values)=>sorted(values)===sorted(q.answer);
-let results={}, retryResults={}, retryIds=null, retryOrder={}, position=1, mode="all", selection=new Set();
+let results={}, retryResults={}, retryIds=null, retrySequence=[], retryOrder={}, position=1, mode="all", selection=new Set();
 try{
   const state=JSON.parse(localStorage.getItem(key)||'null');
   if(state){
     position=Number.isInteger(state.position)&&questions.some(q=>q.n===state.position)?state.position:1;
     if(state.mode==="wrong"||state.mode==="retry")mode=state.mode;
     if(Array.isArray(state.retryIds))retryIds=new Set(state.retryIds);
+    if(Array.isArray(state.retrySequence))retrySequence=[...new Set(state.retrySequence)].filter(n=>questions.some(q=>q.n===n));
     for(const q of questions){
       const values=state.results?.[q.n];
       if(Array.isArray(values)&&values.length&&new Set(values).size===values.length&&values.every(v=>Object.hasOwn(q.options,v))&&(q.kind==='多项选择题'||values.length===1)){
@@ -147,14 +148,16 @@ try{
 const quizTimer=createQuizTimer(key,()=>questions.every(q=>Boolean(results[q.n])));
 function save(){
   quizTimer.sync();
-  try{localStorage.setItem(key,JSON.stringify({position,results,retryResults,retryOrder,mode,retryIds:retryIds?[...retryIds]:null}));}
+  try{localStorage.setItem(key,JSON.stringify({position,results,retryResults,retryOrder,retrySequence,mode,retryIds:retryIds?[...retryIds]:null}));}
   catch{el('storage').hidden=false;}
 }
 function wrongQuestions(){
   return questions.filter(q=>results[q.n]&&!isCorrect(q,results[q.n]));
 }
 function retryQuestions(){
-  return wrongQuestions().filter(q=>!retryIds||retryIds.has(q.n));
+  const list=wrongQuestions().filter(q=>!retryIds||retryIds.has(q.n));
+  const rank=new Map(retrySequence.map((n,i)=>[n,i]));
+  return list.sort((a,b)=>(rank.get(a.n)??Infinity)-(rank.get(b.n)??Infinity));
 }
 function pool(){
   if(mode==='all')return questions;
@@ -469,8 +472,16 @@ el('retry').onclick=()=>{
     retryIds=new Set(list.map(q=>q.n));
     retryResults={};
     retryOrder={};
+    retrySequence=[];
   }
   if(!list.length)return;
+  if(!retrySequence.length){
+    for(let i=list.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [list[i],list[j]]=[list[j],list[i]];
+    }
+    retrySequence=list.map(q=>q.n);
+  }
   mode='retry';
   jump((list.find(q=>!retryResults[q.n])||list[0]).n);
 };
@@ -485,6 +496,7 @@ el('reset').onclick=()=>{
   retryResults={};
   retryIds=null;
   retryOrder={};
+  retrySequence=[];
   mode='all';
   jump(1);
 };

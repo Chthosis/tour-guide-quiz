@@ -6,6 +6,12 @@ self.addEventListener('fetch', event => {
   event.respondWith(caches.open(CACHE).then(async cache => {
     const url = new URL(event.request.url);
     const lookup = url.pathname.endsWith('/') ? new URL('index.html', url).href : event.request;
+    if(event.request.mode === 'navigate') {
+      try {
+        const response = await fetch(event.request);
+        if(response.ok) { await cache.put(lookup, response.clone()); return response; }
+      } catch {}
+    }
     const cached = await cache.match(lookup, {ignoreSearch:true});
     return cached || fetch(event.request);
   }));
