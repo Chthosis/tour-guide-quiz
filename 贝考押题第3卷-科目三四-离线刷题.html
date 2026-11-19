@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>贝考押题第 3 卷 · 刷题</title>
+<style>
+:root{color-scheme:light;--ink:#172a28;--muted:#536765;--teal:#09695e;--line:#dbe5e2;--soft:#e9f6f1;--red:#9c3835;--blush:#fff0ee}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7f5;color:var(--ink);font:16px/1.6 Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+button,select{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #0b806e;outline-offset:3px}
+#stem:focus,#ex-title:focus{outline:none}
+[hidden]{display:none!important}
+header{background:#173e38;color:white}
+.wrap{max-width:960px;margin:auto;padding:0 24px}
+.masthead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:28px;padding-bottom:27px}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.24;margin:0;letter-spacing:-.035em}
+.subject{margin:4px 0 0;color:#d1e6e1;font-size:14px}
+.progress{min-width:140px;text-align:right;font-size:14px;color:#e2f1ed}
+progress{display:block;margin:6px 0 0 auto;width:100%;height:6px;border:none;border-radius:100px;overflow:hidden;background:#38605a}
+progress::-webkit-progress-bar{background:#38605a}
+progress::-webkit-progress-value{background:#8ae1c6}
+progress::-moz-progress-bar{background:#8ae1c6}
+main{padding-top:22px!important;padding-bottom:48px!important}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.controls,.nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select{color:var(--ink);background:white;border:1px solid var(--line);border-radius:9px;padding:8px 14px}
+.toolbar button[aria-pressed="true"]{background:var(--soft);border-color:var(--teal);color:var(--teal)}
+#storage{color:var(--red);font-size:14px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,4vw,32px);box-shadow:0 5px 18px #173e3808}
+.meta{font-size:14px;font-weight:650;color:var(--teal);margin:0 0 8px}
+h2{font-size:clamp(19px,2.7vw,25px);line-height:1.55;margin:0 0 19px}
+.options{display:grid;gap:9px}
+.option{width:100%;display:flex;align-items:baseline;gap:11px;text-align:left;padding:11px 13px}
+.option:hover:not(:disabled){background:#f5f5f5}
+.option[aria-pressed="true"]:not(:disabled){background:#e9e9e9}
+.option:focus:not(:disabled){outline:none;background:#dedede}
+.option b{min-width:25px;color:var(--muted)}
+.option.correct{border-color:#65a791;background:var(--soft);color:#145d50}
+.option.incorrect{border-color:#d38b84;background:var(--blush);color:var(--red)}
+.option[aria-pressed="true"] b,.option.correct b,.option.incorrect b{color:inherit}
+.flag{margin-left:auto;font-size:13px;white-space:nowrap}
+.actions{margin-top:17px}
+.primary{color:white;background:var(--teal);border-color:var(--teal);font-weight:650}
+button:disabled:not(.option){opacity:.47}
+.result{margin-top:20px;padding:12px 15px;border-radius:9px;background:var(--soft);color:#145d50;font-weight:650}
+.result.wrong{background:var(--blush);color:var(--red)}
+.nav{justify-content:space-between;margin-top:15px}
+.nav #flip{margin-inline:auto}
+.explanation h3{font-size:18px;margin:0 0 12px}
+figure{margin:0 0 12px}
+figure img{display:block;max-width:100%;height:auto;margin:auto}
+figcaption{font-size:12px;text-align:right;color:var(--muted);margin:4px 0}
+details{margin-top:15px}
+summary{cursor:pointer;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;margin:10px 0}
+.grid button{padding:5px 0}
+.grid .right{background:var(--soft)}
+.grid .wrong{background:var(--blush)}
+.grid button[aria-current="true"]{border:2px solid var(--teal);font-weight:700}
+@media(max-width:560px){.wrap{padding-left:14px;padding-right:14px}.masthead{align-items:flex-start}.progress{min-width:96px}.option{gap:7px}.flag{font-size:12px}}
+#report h2{margin-bottom:6px}
+#report-title:focus{outline:none}
+#total-score{font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--teal);margin:0 0 18px}
+#report table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}
+#report th,#report td{padding:10px 5px;border-bottom:1px solid var(--line)}
+
+.selection-mark{visibility:hidden;color:var(--teal);font-weight:650}
+.option[aria-pressed="true"] .selection-mark{visibility:visible}
+</style><link rel="stylesheet" href="quiz-theme.css"><script src="quiz-theme.js"></script><script src="quiz-timer.js"></script>
+</head>
+<body>
+<header><div class="wrap masthead">
+  <div><h1>贝考押题第 3 卷</h1><p class="subject">导游资格考试 · 科目三、四</p></div>
+  <div class="theme-controls"><button class="theme-toggle" type="button" hidden>切换到夜间</button><div class="progress"><span id="progress-label"></span><span id="quiz-timer" style="display:block;font-variant-numeric:tabular-nums"></span><progress id="progress" aria-label="答题进度"></progress></div></div>
+</div></header>
+<main class="wrap">
+  <nav aria-label="选卷" style="margin-bottom:12px"><a href="贝考押题卷-选卷.html">返回选卷</a></nav>
+  <div class="toolbar">
+    <div class="controls"><button id="all" aria-pressed="true">全部题目</button><button id="mistakes" aria-pressed="false">错题 <span id="wrong-count">0</span></button></div>
+    <div class="controls"><button id="show-report" hidden>完卷成绩</button><button id="retry" hidden>重刷错题</button><button id="reset">重新做题</button></div>
+  </div>
+  <p id="score" role="status"></p>
+  <p id="storage" hidden role="status">浏览器无法保存进度，关闭页面后本次作答会清空。</p>
+  <section class="card" id="report" hidden aria-labelledby="report-title">
+    <h2 id="report-title" tabindex="-1">完卷成绩</h2>
+    <p id="total-score"></p>
+    <table>
+      <thead><tr><th scope="col">题型</th><th scope="col">答对</th><th scope="col">答错</th><th scope="col">得分</th></tr></thead>
+      <tbody id="subscores"></tbody>
+    </table>
+  </section>
+  <section class="card" id="card" aria-labelledby="meta">
+    <p class="meta" id="meta"></p>
+    <div id="question-face">
+      <h2 id="stem" tabindex="-1"></h2>
+      <div class="options" id="options" role="group" aria-labelledby="stem"></div>
+      <div class="actions" id="actions" hidden><button id="submit" class="primary" aria-keyshortcuts="Enter" title="快捷键：Enter" disabled>确认答案</button></div>
+      <div id="result" class="result" role="status" hidden></div>
+    </div>
+    <section id="explanation" class="explanation" hidden aria-labelledby="ex-title">
+      <h3 id="ex-title" tabindex="-1">原卷解析</h3><p id="original-order" hidden>原卷截图使用原选项顺序。</p><p id="source-note" hidden></p><div id="clips"></div>
+    </section>
+    <nav class="nav" id="nav" aria-label="题目翻页"><button id="prev" aria-keyshortcuts="ArrowLeft" title="快捷键：← / Q">上一题</button><button id="flip" aria-controls="explanation" aria-keyshortcuts="Space" hidden>查看解析 · 空格</button><button id="next" class="primary" aria-keyshortcuts="ArrowRight" title="快捷键：→ / W">下一题</button></nav>
+  </section>
+  <details id="index"><summary aria-keyshortcuts="Escape" title="快捷键：Esc">题号导航</summary><div id="grid" class="grid"></div></details>
+</main>
+<script type="application/json" id="question-data">[{"n":1,"kind":"判断题","answer":"对","stem":"宫廷菜是专供皇室成员享用的菜肴，分南北两大风格，选料考究，讲究刀工，造型主要运用“围、配、镶、酿”等工艺手法。（ ）","options":{"对":"正确","错":"错误"},"clips":[[1,"images/ec0e9ee0f3d9380b047c1341.webp"],[2,"images/d9d77316ac636868276109d1.webp"],[3,"images/6fab1d3481004b4ccd61d001.webp"]]},{"n":2,"kind":"判断题","answer":"错","stem":"东汉末年朝政被曹操控制并挟制着汉文帝。（ ）","options":{"对":"正确","错":"错误"},"clips":[[3,"images/bf8a975afab0de69af93a859.webp"]]},{"n":3,"kind":"判断题","answer":"对","stem":"《木兰辞》和《孔雀东南飞》都是著名长篇叙事诗，并称为魏晋南北朝民间长篇叙事诗的双璧。（ ）","options":{"对":"正确","错":"错误"},"clips":[[3,"images/20e1346178a922a4c84c93f3.webp"],[4,"images/533054e3b7767e2fc60061d7.webp"]]},{"n":4,"kind":"判断题","answer":"对","stem":"夏朝是中国历史上第一个王朝。（ ）","options":{"对":"正确","错":"错误"},"clips":[[4,"images/d8650d6a5bfbead8eb244a74.webp"]]},{"n":5,"kind":"判断题","answer":"错","stem":"瓷器是我国由旧石器时代过渡到新石器时代的重要标志之一。（ ）","options":{"对":"正确","错":"错误"},"clips":[[5,"images/6809b9be89e9e12701605290.webp"],[6,"images/c68bcf63be1c8a989644880b.webp"]]},{"n":6,"kind":"判断题","answer":"对","stem":"2024 年 5 月 17 日，党中央首次召开了全国旅游发展大会，会前习近平总书记专门对旅游工作作出重要指示，不仅充分肯定了我国旅游业所做出的重要贡献，而且指明了旅游业行稳致远的发展方向。（ ）","options":{"对":"正确","错":"错误"},"clips":[[7,"images/f6ac1a3fb8fdceec39884bb2.webp"],[8,"images/66eadaf604ed34f0fdb7d944.webp"],[9,"images/77d7f619350b73982311db7f.webp"]]},{"n":7,"kind":"判断题","answer":"对","stem":"中国古代最早采用的是帝王纪年法，即从帝王登基那一年开始算起。（ ）","options":{"对":"正确","错":"错误"},"clips":[[9,"images/10a7dc6989e41d9df3a83d78.webp"]]},{"n":8,"kind":"判断题","answer":"错","stem":"中国共产党第二次代表大会在广州举行，明确了党的纲领。（ ）","options":{"对":"正确","错":"错误"},"clips":[[10,"images/57afd6b43786992d0267ded3.webp"]]},{"n":9,"kind":"判断题","answer":"对","stem":"1964 年 10 月 16 日，我国第一颗原子弹爆炸成功。（ ）","options":{"对":"正确","错":"错误"},"clips":[[10,"images/fcba62a76e003622f87a3be0.webp"],[11,"images/af4322e3eb1122dbc059dc14.webp"]]},{"n":10,"kind":"判断题","answer":"对","stem":"三江并流指的是金沙江、澜沧江、怒江形成的世界罕见的“江水并流而不交汇”的奇特自然地理景观。（ ）","options":{"对":"正确","错":"错误"},"clips":[[11,"images/de8256e245f87895b931cdb2.webp"]]},{"n":11,"kind":"判断题","answer":"对","stem":"1848 年，《共产党宣言》出版，第一次全面系统地阐述了科学社会主义理论。（ ）","options":{"对":"正确","错":"错误"},"clips":[[12,"images/c78df67732aacc108f01351d.webp"]]},{"n":12,"kind":"判断题","answer":"错","stem":"西晋是蜀国权臣司马懿及其子司马师、司马昭和孙子司马炎建立的政权。（ ）","options":{"对":"正确","错":"错误"},"clips":[[12,"images/7e091c2c4d4f157494f256ac.webp"],[13,"images/df4d44ed11a6bb9b9bdc2c99.webp"]]},{"n":13,"kind":"判断题","answer":"错","stem":"汉代形成以“华”“夏”单称或“华夏”连称的族体。（ ）","options":{"对":"正确","错":"错误"},"clips":[[13,"images/81ab0000334d9ae3190a96fd.webp"],[14,"images/146438d92cb45535329e3384.webp"]]},{"n":14,"kind":"判断题","answer":"错","stem":"2012 年首届中国非物质文化遗产博览会上，以“龙头蜈蚣”为代表的阳江风筝制作技艺获得金奖。（ ）","options":{"对":"正确","错":"错误"},"clips":[[14,"images/a496fb631213c938a01a1e28.webp"]]},{"n":15,"kind":"判断题","answer":"错","stem":"花江峡谷大桥被誉为“桥梁界的珠穆朗玛峰”，标志着中国从桥梁大国走向桥梁强国。（ ）","options":{"对":"正确","错":"错误"},"clips":[[15,"images/8e9956eb09efefef87664733.webp"],[16,"images/ea5b915ab04bc5837520b19d.webp"],[17,"images/eef483d7e9c92c4669c9e8c2.webp"]]},{"n":16,"kind":"判断题","answer":"错","stem":"隋唐两代是中国佛教发展的译传阶段。（ ）","options":{"对":"正确","错":"错误"},"clips":[[17,"images/7b8fbc852b13ba1c66e8336f.webp"]]},{"n":17,"kind":"判断题","answer":"对","stem":"铁观音是青茶的一种，冲泡后呈螺旋形，身骨沉重，有天然兰花香，俗称“观音韵”。（ ）","options":{"对":"正确","错":"错误"},"clips":[[17,"images/8cdbe63a192d0d9a26efb8b8.webp"],[18,"images/c02aaf9a6e8343eaaf636bb6.webp"],[19,"images/189a1c2476068f70472adca1.webp"]]},{"n":18,"kind":"判断题","answer":"对","stem":"道教早期的两个教派分别是太平道和五斗米道。（ ）","options":{"对":"正确","错":"错误"},"clips":[[20,"images/ec3a081a48b9cb90966e829c.webp"]]},{"n":19,"kind":"判断题","answer":"对","stem":"我国古代实行阴阳合历，阴历计月，阳历计年，但由于每三年阴历比阳历会少一个月，故每三年增加一个闰月。（ ）","options":{"对":"正确","错":"错误"},"clips":[[20,"images/7791d31cfd412ddbd4e9b9e7.webp"],[21,"images/3fe4e4cfc2df1778ff706e3c.webp"]]},{"n":20,"kind":"判断题","answer":"错","stem":"10 月 19 日被定为抗美援朝纪念日。（ ）","options":{"对":"正确","错":"错误"},"clips":[[21,"images/79ea3587a7c0f5abadf91ed1.webp"]]},{"n":21,"kind":"判断题","answer":"对","stem":"山西省地处黄河流域中部，总的地势是“两山夹一川”，地形剖面呈“凹”字形。（ ）","options":{"对":"正确","错":"错误"},"clips":[[22,"images/23c93a2bff1609dc860aba62.webp"]]},{"n":22,"kind":"判断题","answer":"对","stem":"海南省是我国海域面积最大的省，海域面积约 200 万平方千米。（ ）","options":{"对":"正确","错":"错误"},"clips":[[23,"images/ee8ec4e1bd0e1079a53113de.webp"],[24,"images/50d8ab6ae1e6c74f6a764181.webp"]]},{"n":23,"kind":"判断题","answer":"错","stem":"北京胡同众多，大部分形成于宋、元、明三个朝代，民间有“有名的胡同三千六，没名的胡同赛牛毛”之说。（ ）","options":{"对":"正确","错":"错误"},"clips":[[24,"images/6e68b29e3aaa0b2ff3d9a5bc.webp"],[25,"images/cce3abc233c095e78b324e51.webp"],[26,"images/3b92501483e23e565e7ec60b.webp"],[27,"images/37baf5a59e0da819da335b7d.webp"]]},{"n":24,"kind":"判断题","answer":"对","stem":"三月三歌节，又称三月三歌圩，是壮族盛大的传统歌节。（ ）","options":{"对":"正确","错":"错误"},"clips":[[27,"images/7bd2012b7a312f27ad4be1db.webp"],[28,"images/d8c5cc090ffd8177be956a57.webp"]]},{"n":25,"kind":"判断题","answer":"对","stem":"1992 年春，邓小平视察南方，在广东发表了著名的南方谈话，根据广东的改革开放实践提出了“发展才是硬道理”的科学论断。（ ）","options":{"对":"正确","错":"错误"},"clips":[[29,"images/c15e612f62aa87db254740ea.webp"],[30,"images/23fe208be15d929978eacd4a.webp"],[31,"images/d927ea1a4074dac73bf7a28a.webp"]]},{"n":26,"kind":"判断题","answer":"错","stem":"纳西族的傩戏，被称为“中国戏剧的活化石”。（ ）","options":{"对":"正确","错":"错误"},"clips":[[31,"images/38473750625e10648dd08edd.webp"],[32,"images/1f8aaf72795753a2885db68d.webp"],[33,"images/f62616aa90ea024bd24bf358.webp"]]},{"n":27,"kind":"判断题","answer":"错","stem":"红山文化出土的“玉龙”被誉为“中华第一龙”，包头也被称为“玉龙的故乡”。（ ）","options":{"对":"正确","错":"错误"},"clips":[[33,"images/e85fdefb970d690a877f0bb9.webp"]]},{"n":28,"kind":"判断题","answer":"对","stem":"中华世纪坛是中国人民迎接新千年、新世纪的标志性纪念建筑。（ ）","options":{"对":"正确","错":"错误"},"clips":[[34,"images/c7d2a621beca277d081534d7.webp"],[35,"images/51dadb780ae44fc778164b88.webp"],[36,"images/37baf5a59e0da819da335b7d.webp"]]},{"n":29,"kind":"判断题","answer":"对","stem":"海南有《鹿回头》《大力神》《黎母神话》等十大经典神话传说。（ ）","options":{"对":"正确","错":"错误"},"clips":[[36,"images/3cd08de493b2060b8041e89f.webp"]]},{"n":30,"kind":"判断题","answer":"错","stem":"中国第一家票号是日昇昌，位于丽江古城。（ ）","options":{"对":"正确","错":"错误"},"clips":[[36,"images/492d305e14b4e9ef77d173f7.webp"],[37,"images/1ffc8442945ee198d4131e7d.webp"],[38,"images/b9a92ea9360f2d90c0e94507.webp"]]},{"n":31,"kind":"判断题","answer":"对","stem":"上海科技馆是中国唯一拥有科技馆、自然博物馆、天文馆三座大型场馆的综合性科学技术博物馆集群。（ ）","options":{"对":"正确","错":"错误"},"clips":[[38,"images/81bc3780f95ba7adee0e5d05.webp"]]},{"n":32,"kind":"判断题","answer":"错","stem":"四川省最有代表性的羌族碉楼建筑是用石片垒砌而成的丹巴碉楼。（ ）","options":{"对":"正确","错":"错误"},"clips":[[38,"images/dfbdb619b2ee588ac965374a.webp"],[39,"images/62416793a5944d9c7f404f87.webp"]]},{"n":33,"kind":"判断题","answer":"对","stem":"远古时期，肃慎、濊貊、东胡三大部落在吉林这块土地上繁衍生息。（ ）","options":{"对":"正确","错":"错误"},"clips":[[39,"images/8a66425ee4f75e3265992a22.webp"],[40,"images/30ae0ea941a527f67877f9e7.webp"]],"sourceNote":"试题卷与解析卷文字有差异，本题采用解析卷的对应表述。"},{"n":34,"kind":"判断题","answer":"对","stem":"地坑院是陕西、河南、山西一种比较古老的地穴式建筑，被形容为“进村不见村，见树不见房，闻声不见人，树冠露三分”，又称“地下四合院”。（ ）","options":{"对":"正确","错":"错误"},"clips":[[41,"images/33b78120542561ff1173cf1f.webp"],[42,"images/13e5245ee0adc0072538b4a3.webp"],[43,"images/df2f80a734d4ebf57e1c024d.webp"]]},{"n":35,"kind":"判断题","answer":"错","stem":"“花儿”是回族最有特色的民间歌谣，一般在家庭聚会，新婚宴席上的演唱。（ ）","options":{"对":"正确","错":"错误"},"clips":[[43,"images/3393cfa5227e9889360ac417.webp"],[44,"images/38b3067e79cd18b3d3a829f3.webp"],[45,"images/d3a6b85478eb25b8993ed01f.webp"],[46,"images/7e7891549e9a772730425379.webp"]]},{"n":36,"kind":"判断题","answer":"错","stem":"知名舞剧《丝路花雨》《大梦敦煌》，是陕西省对外宣传推广的文化名片。（ ）","options":{"对":"正确","错":"错误"},"clips":[[46,"images/ad4c3afe0cb2b7d510278a0a.webp"],[47,"images/5eeec0fa5d13f9cdfabbb0cf.webp"],[48,"images/9e134c6eecf4f3dc97ef9a6e.webp"]]},{"n":37,"kind":"判断题","answer":"错","stem":"纵贯天山脊梁的独库公路，起点位于天山北麓的独山子，终点位于天山以南的库车，全长 561 公里，被众多游客称为“最美 318 线”。（ ）","options":{"对":"正确","错":"错误"},"clips":[[48,"images/efad8293ded7d60755beb35f.webp"],[49,"images/1d93c34a46882a380d48d211.webp"],[50,"images/756c341f00bf10c72c0ff8b3.webp"]]},{"n":38,"kind":"判断题","answer":"对","stem":"著名的黄大仙祠是香港唯一可以举行道教婚礼的宫观。（ ）","options":{"对":"正确","错":"错误"},"clips":[[50,"images/cbaf32d17f78bd1094b7ca29.webp"],[51,"images/cf21d57bdc32549f057ee18b.webp"],[52,"images/18fa49a17b6c5935317c8c7f.webp"]]},{"n":39,"kind":"判断题","answer":"错","stem":"台湾省纵亚热带与热带，是我国多台风、多火山、多温泉、多地震、多雪灾的省份。（ ）","options":{"对":"正确","错":"错误"},"clips":[[52,"images/d067d58e33a03faecaa20eff.webp"],[53,"images/238184c19e699e47c8d2c692.webp"],[54,"images/5290e23532dae9812f2d0ba7.webp"]]},{"n":40,"kind":"判断题","answer":"对","stem":"长春—满洲里—德国（简称“长满欧”）国际货运班列终点到达德国的施瓦茨海德，全程约 9800 公里。（ ）","options":{"对":"正确","错":"错误"},"clips":[[54,"images/102351a5d85915ff0e97d6fd.webp"],[55,"images/5625746813ec3499e341b611.webp"],[56,"images/1c95adf46b23f03eef804df3.webp"]]},{"n":41,"kind":"单项选择题","answer":"C","stem":"（ ）有“明贵贱”的作用。","options":{"A":"名","B":"字","C":"氏","D":"姓"},"clips":[[56,"images/39d31fe3395b8a42e2fe17c2.webp"]]},{"n":42,"kind":"单项选择题","answer":"D","stem":"下列宫殿外的陈设中，利用太阳的投影和地球自转的原理，借指针阴影的位置来显示时间的是（ ）。","options":{"A":"石狮","B":"铜龟、铜鹤","C":"嘉量","D":"日晷"},"clips":[[57,"images/bfd2ec06ebdc5ff441758b42.webp"],[58,"images/b5c665e871feda098e86a023.webp"]]},{"n":43,"kind":"单项选择题","answer":"C","stem":"毛泽东的（ ）驳斥了“中国必亡论”和“中国速胜论”。","options":{"A":"《反对本本主义》","B":"《论联合政府》","C":"《论持久战》","D":"《星星之火，可以燎原》"},"clips":[[59,"images/147ad22ddcbfd6453e4e52f5.webp"],[60,"images/e00e18a6b6c7a19d5af47b24.webp"],[61,"images/cf04f894b301b2a53fe726ab.webp"],[62,"images/07a13bc2f478dc1bfacb487d.webp"]]},{"n":44,"kind":"单项选择题","answer":"B","stem":"乔木完全消失，以杜鹃、高山柳等低矮耐寒灌木连片为主，这是（ ）垂直植被带的特征。","options":{"A":"基带森林带","B":"亚高山灌丛带","C":"高山草甸带","D":"山地针阔混交林带"},"clips":[[62,"images/95731c8c6499d89e2b60cda8.webp"],[63,"images/7cc9f01d03f21fc7f4fc8e04.webp"]]},{"n":45,"kind":"单项选择题","answer":"B","stem":"（ ）是我国第一个国家森林公园，素有“奇峰三千，秀水八百”之称。","options":{"A":"武夷山","B":"武陵源","C":"梵净山","D":"三清山"},"clips":[[64,"images/2a7c7fff647001223a4ae2c6.webp"],[65,"images/e49d8f9252fad481b066e5ac.webp"],[66,"images/6b7042dbe5b04ee811716e47.webp"]]},{"n":46,"kind":"单项选择题","answer":"A","stem":"（ ）县治与府治同在一座城内，形成了“城套城”的独特格局。","options":{"A":"徽州古城","B":"阆中古城","C":"平遥古城","D":"丽江古城"},"clips":[[66,"images/30fb71fafb552b4deddd24a7.webp"],[67,"images/fb9f2c3ce3b9014a31a261c9.webp"]]},{"n":47,"kind":"单项选择题","answer":"A","stem":"现存最早的编年体史书是（ ）。","options":{"A":"《春秋》","B":"《尚书》","C":"《史记》","D":"《通典》"},"clips":[[68,"images/8cf8c02ddb2b33af089037ea.webp"]]},{"n":48,"kind":"单项选择题","answer":"D","stem":"先用泥土塑出模型，然后在模型外面裱上夏布，涂上青漆，等漆干了之后脱去土模，再进行裱漆加工上色的工艺品是（ ）。","options":{"A":"扬州玉雕","B":"北京雕漆","C":"扬州镶嵌漆器","D":"福州脱胎漆器"},"clips":[[68,"images/ce24504eda659d4bf0538f12.webp"],[69,"images/221530e53f637f077c8d0b97.webp"]]},{"n":49,"kind":"单项选择题","answer":"B","stem":"世界旅游联盟的英语缩写是（ ）。","options":{"A":"UNWTO","B":"WTA","C":"PATA","D":"UFTAA"},"clips":[[70,"images/95e5d06097edc7e4e666c840.webp"],[71,"images/68eba7c200c5b8d9f6b39f4a.webp"]]},{"n":50,"kind":"单项选择题","answer":"C","stem":"具有一酒多香的风格的名酒是（ ）。","options":{"A":"郎酒","B":"汾酒","C":"西凤酒","D":"茅台酒"},"clips":[[72,"images/140e573ba2851d531a6ca7a5.webp"],[73,"images/22ef1533695708069af76748.webp"]]},{"n":51,"kind":"单项选择题","answer":"B","stem":"现存秦代秦始皇陵以及汉代帝王陵墓，都采取（ ）形式，其中尤以秦始皇陵为典型。","options":{"A":"以山为陵","B":"方上","C":"宝城宝顶","D":"小方上"},"clips":[[74,"images/7527fa772c5c33243b3d3107.webp"],[75,"images/8214d8d2b8ac1639a3f78574.webp"]]},{"n":52,"kind":"单项选择题","answer":"B","stem":"下列关于啤酒的说法错误的是（ ）。","options":{"A":"啤酒有“液体面包”的美称","B":"啤酒营养丰富，热量低、低酒度","C":"产自山东青岛的青岛啤酒是中国最著名的啤酒，口感柔和、清爽纯净","D":"按加工时是否经过均衡程序及杀菌可把啤酒分为生啤酒和熟啤酒"},"clips":[[75,"images/a6e8d9465e1993c26a110fb6.webp"],[76,"images/a2c164a3acbe05698f23c254.webp"]]},{"n":53,"kind":"单项选择题","answer":"B","stem":"全国抗战以来八路军在华北发动的规模最大、持续时间最长的一次带战略性进攻的战役是（ ）。","options":{"A":"台儿庄战役","B":"百团大战","C":"平型关大捷","D":"平津战役"},"clips":[[76,"images/32fd3c24595aece1df8a9f17.webp"],[77,"images/8f27c093962931615e0561c1.webp"]]},{"n":54,"kind":"单项选择题","answer":"C","stem":"（ ）是古桥中最富有生命力的一种桥型。","options":{"A":"梁桥","B":"浮桥","C":"拱桥","D":"索桥"},"clips":[[77,"images/dd2a137056d59729352a4be3.webp"],[78,"images/44f85196e3d825ee36d41123.webp"]]},{"n":55,"kind":"单项选择题","answer":"D","stem":"被誉为“花中四君子”的是（ ）。","options":{"A":"松、兰、竹、菊","B":"梅、松、竹、菊","C":"梅、兰、松、菊","D":"梅、兰、竹、菊"},"clips":[[79,"images/ae5cf19ee2dd97e84d98e4cf.webp"]]},{"n":56,"kind":"单项选择题","answer":"D","stem":"八卦中的“坎”代表（ ）。","options":{"A":"火","B":"山","C":"泽","D":"水"},"clips":[[79,"images/bc27ef496db8e27c539c7433.webp"],[80,"images/5978a0be3df6f9645eaffad5.webp"]]},{"n":57,"kind":"单项选择题","answer":"B","stem":"关于中药配伍中药物间能产生毒性反应或强烈副作用的叫（ ）。","options":{"A":"相须","B":"相反","C":"相恶","D":"相杀"},"clips":[[81,"images/3eee178bd2a65e7e54fd29d7.webp"]]},{"n":58,"kind":"单项选择题","answer":"B","stem":"1958 年 9 月 2 日，我国第一座电视台（ ）开播。","options":{"A":"天津电视台","B":"北京电视台","C":"上海电视台","D":"中央电视台"},"clips":[[81,"images/c88a50cbafbf5419d413cc10.webp"],[82,"images/e5a0482aab3a76acbb6fff1b.webp"],[83,"images/274f8cf345385d10f4bf64d5.webp"],[84,"images/619030d510e08c43149cff7c.webp"]]},{"n":59,"kind":"单项选择题","answer":"C","stem":"被严羽评为“唐人七言律诗第一”的是（ ）的《黄鹤楼》。","options":{"A":"李白","B":"王勃","C":"崔颢","D":"王维"},"clips":[[84,"images/41624c4b838f628dc510ea16.webp"],[85,"images/256536b1d8153501ad105d4d.webp"],[86,"images/1a5651ae1ccbf6f2ade8aba0.webp"]]},{"n":60,"kind":"单项选择题","answer":"C","stem":"下列属于母系氏族代表性文化的是（ ）。","options":{"A":"龙山文化","B":"良渚文化","C":"河姆渡文化","D":"大汶口文化"},"clips":[[86,"images/1c52090e09f3a9f0ed81e7ed.webp"],[87,"images/9e04acd9d3d167a948b5c0e0.webp"]]},{"n":61,"kind":"单项选择题","answer":"A","stem":"（ ）是中国第一条高速铁路。","options":{"A":"京津城际铁路","B":"京沪高铁","C":"京张高铁","D":"京广高铁"},"clips":[[88,"images/c596507c2cd49b2d219ae1af.webp"],[89,"images/274f8cf345385d10f4bf64d5.webp"],[90,"images/07a13bc2f478dc1bfacb487d.webp"]]},{"n":62,"kind":"单项选择题","answer":"A","stem":"世界上现存最大的敞肩桥是（ ）。","options":{"A":"赵州桥","B":"湘子桥","C":"宝带桥","D":"卢沟桥"},"clips":[[90,"images/8c15e0d95bfdcb6b682354fc.webp"],[91,"images/dd952dd31b48938680950a18.webp"]]},{"n":63,"kind":"单项选择题","answer":"B","stem":"被誉为“石中之王”的寿山石雕产于（ ）。","options":{"A":"浙江青田","B":"福建福州","C":"浙江昌化","D":"内蒙古赤峰"},"clips":[[92,"images/f976952af1af73330b30a22f.webp"],[93,"images/9cf204c04161d34bd82ab491.webp"]]},{"n":64,"kind":"单项选择题","answer":"B","stem":"宋代是中国制瓷业极其辉煌的时期，形成了著名的“五大名窑”，其中以（ ）为魁。","options":{"A":"哥窑","B":"汝窑","C":"定窑","D":"钧窑"},"clips":[[93,"images/55dbcfae501ab037004e6724.webp"],[94,"images/331cd0a47cc5a0df503d7ef9.webp"],[95,"images/97593a75d701701d3c3ad3b9.webp"]]},{"n":65,"kind":"单项选择题","answer":"D","stem":"（ ）的特点是木刻水印和手工彩绘相结合。","options":{"A":"四川绵竹年画","B":"苏州桃花坞木版年画","C":"山东潍坊杨家埠年画","D":"天津杨柳青年画"},"clips":[[96,"images/5b808be2fa1e93f0ab34f914.webp"],[97,"images/adec983645664f7f80fe7b8f.webp"]]},{"n":66,"kind":"单项选择题","answer":"A","stem":"我国现存最早的陂塘型灌溉工程是（ ）。","options":{"A":"芍陂","B":"鉴湖","C":"邗沟","D":"灵渠"},"clips":[[98,"images/d900e400707755ee3085b283.webp"],[99,"images/7c2b2729fc3d780c0ec40363.webp"]]},{"n":67,"kind":"单项选择题","answer":"A","stem":"以下关于各客源国说法正确的是（ ）。","options":{"A":"韩国济州岛以“三多、三无、三丽”著称","B":"俄罗斯首都莫斯科有“北方威尼斯”之称","C":"荷兰的鹿特丹港是世界最大的海港","D":"肯尼亚观赏动物大迁徙的时间是 6-7 月"},"clips":[[100,"images/6fd978ec283a5a01f173afcb.webp"],[101,"images/17448b86dab578190c06fdb1.webp"],[102,"images/6f89cf33c6cc7ed577f21d7c.webp"],[103,"images/55b2cffebfb49ca62d30d9da.webp"]],"sourceNote":"试题卷与解析卷文字有差异，本题采用解析卷的对应表述。"},{"n":68,"kind":"单项选择题","answer":"B","stem":"鲁菜在（ ）时期进入宫廷，并成为御膳支柱。","options":{"A":"宋元","B":"元明清","C":"唐宋","D":"清代"},"clips":[[104,"images/9370a2c6b02e97a110a5e6ef.webp"],[105,"images/eec26dfe01e763bdd7818e33.webp"]]},{"n":69,"kind":"单项选择题","answer":"D","stem":"律诗的对仗要求（ ）。","options":{"A":"首联尾联对仗","B":"首联颔联对仗","C":"颈联尾联对仗","D":"颔联颈联对仗"},"clips":[[106,"images/269f6a8360c9e05768450534.webp"]]},{"n":70,"kind":"单项选择题","answer":"A","stem":"（ ）盛产多种矿物，有“聚宝盆”的美称。","options":{"A":"柴达木盆地","B":"准噶尔盆地","C":"塔里木盆地","D":"四川盆地"},"clips":[[106,"images/97b892a0828bfd1ec84a6951.webp"],[107,"images/eb2eca6c8eea2165cfa79c8a.webp"]]},{"n":71,"kind":"单项选择题","answer":"C","stem":"世界上现存规模最大、保存最完整的古代木构建筑群是（ ）。","options":{"A":"天坛","B":"沈阳故宫","C":"北京故宫","D":"布达拉宫"},"clips":[[108,"images/8d60af99e9aba589eccfbd6a.webp"],[109,"images/a2b7ea09003b41a1692f8f94.webp"]]},{"n":72,"kind":"单项选择题","answer":"B","stem":"（ ）是园林中的主体建筑，用来待客与集会。","options":{"A":"榭","B":"厅堂","C":"轩","D":"书房馆斋"},"clips":[[110,"images/a37084f02ec22660732d1b42.webp"],[111,"images/95436312294c5b9e292c731c.webp"]]},{"n":73,"kind":"单项选择题","answer":"C","stem":"有“东南第一山”之称的名山是（ ）。","options":{"A":"黄山","B":"恒山","C":"雁荡山","D":"长白山"},"clips":[[111,"images/350328c6c195ad82b19e0a74.webp"],[112,"images/c41743cb289cd979d18d3c5b.webp"]]},{"n":74,"kind":"单项选择题","answer":"C","stem":"（ ）能够实现缩地成寸、小中见大的艺术效果，犹如立体的缩小版山水风景。","options":{"A":"匾额","B":"楹联","C":"盆景","D":"刻石"},"clips":[[112,"images/e99d661795108811d175b9cf.webp"],[113,"images/72117ffcb8fbb21732ae9313.webp"]]},{"n":75,"kind":"单项选择题","answer":"A","stem":"广东“四大园林”中保存原貌最完好的古典园林是（ ）。","options":{"A":"余荫山房","B":"梁园","C":"清晖园","D":"可园"},"clips":[[113,"images/875ed484a80f090a995f192a.webp"],[114,"images/d6a201d3e35f9b2da707f173.webp"],[115,"images/93e500c542dd4ff08c72b7b2.webp"]]},{"n":76,"kind":"单项选择题","answer":"A","stem":"以下是中国瓷器的主要产地的是（ ）。","options":{"A":"山东淄博","B":"江苏宜兴","C":"甘肃天水","D":"四川成都"},"clips":[[115,"images/7c8ecc07787538182be3839e.webp"],[116,"images/0f277a9aa9d5932c89ba7176.webp"]]},{"n":77,"kind":"单项选择题","answer":"D","stem":"2014 年 7 月 15 日，在巴西举行的金砖国家领导人第六次会晤宣布成立金砖国家新开发银行，并将总部设在（ ）。","options":{"A":"巴西巴西利亚","B":"巴西里约热内卢","C":"中国北京","D":"中国上海"},"clips":[[116,"images/67a0b07287a81bb10c2b4422.webp"]]},{"n":78,"kind":"单项选择题","answer":"B","stem":"被誉为“社会生活百科全书”的《中华人民共和国民法典》于（ ）正式施行。","options":{"A":"2020 年","B":"2021 年","C":"2022 年","D":"2023 年"},"clips":[[116,"images/680cad3d476a841c377a4bbb.webp"],[117,"images/1597e643a1000f5af6175a9f.webp"]]},{"n":79,"kind":"单项选择题","answer":"B","stem":"（ ）出现了资本主义萌芽。","options":{"A":"唐朝","B":"明朝","C":"宋朝","D":"清朝"},"clips":[[117,"images/6ddff2b7c0b5e1536ba370cb.webp"]]},{"n":80,"kind":"单项选择题","answer":"D","stem":"屋面四坡五脊，前后屋面相交形成一条正脊，两侧屋面与前后屋面相交形成四条斜脊的屋顶形式是（ ）。","options":{"A":"歇山顶","B":"攒尖顶","C":"悬山顶","D":"庑殿顶"},"clips":[[118,"images/a2231d9f3eb216617e2b4bb1.webp"],[119,"images/311703181d0572ffa98c118f.webp"]]},{"n":81,"kind":"单项选择题","answer":"A","stem":"文殊菩萨的道场位于（ ）。","options":{"A":"山西五台山","B":"浙江普陀山","C":"四川峨眉山","D":"安徽九华山"},"clips":[[120,"images/5293c8f9719079e5cb8cf227.webp"]]},{"n":82,"kind":"单项选择题","answer":"B","stem":"社稷坛是帝王祭祀土地神和谷物神的地方。北京社稷坛按照“五行”中五方五色的配置，中央区域的颜色是（ ）。","options":{"A":"红色","B":"黄色","C":"白色","D":"青色"},"clips":[[120,"images/585e3de01e8187be79c5ec15.webp"],[121,"images/dbefcdc516cac962207cad9b.webp"]]},{"n":83,"kind":"单项选择题","answer":"C","stem":"被称为“温泉城”的是（ ）。","options":{"A":"济南","B":"黄山","C":"福州","D":"海南"},"clips":[[121,"images/ed6caf22dfdadd6f62688408.webp"],[122,"images/04b45d081a0e23a61a5d31b9.webp"]]},{"n":84,"kind":"单项选择题","answer":"A","stem":"下列剪纸流派中，被称为“剪出来的中国白描”的是（ ）。","options":{"A":"扬州剪纸","B":"山西剪纸","C":"陕西剪纸","D":"佛山剪纸"},"clips":[[122,"images/4e7270cd133b22cebbfc4d8f.webp"],[123,"images/2cba57a858a3f66a720dcd2f.webp"],[124,"images/a9a03fbb7f81b92fa6d3ca51.webp"]]},{"n":85,"kind":"单项选择题","answer":"B","stem":"国产大飞机 C919 所使用的陶铝新材料由（ ）研发。","options":{"A":"江苏","B":"安徽","C":"上海","D":"浙江"},"clips":[[124,"images/f69f516b6476d05056a263e6.webp"],[125,"images/5ef77d225b559562e7864ace.webp"]]},{"n":86,"kind":"单项选择题","answer":"D","stem":"下列民俗艺术中，年画技艺全国独此一家的是（ ）。","options":{"A":"桃花坞年画","B":"杨柳青年画","C":"漳州木版年画","D":"高密扑灰年画"},"clips":[[125,"images/f9e15fcd045ba071223d246c.webp"],[126,"images/d6cf297ad776e8946d769218.webp"],[127,"images/78ad6c5334e5e855d16066a1.webp"]]},{"n":87,"kind":"单项选择题","answer":"A","stem":"素有“六山一水两分田，一分道路和庄园”之说的是（ ）。","options":{"A":"江西省","B":"福建省","C":"浙江省","D":"贵州省"},"clips":[[127,"images/63254c1e3e598881c095e750.webp"],[128,"images/508957a4adf89e4320573a65.webp"]]},{"n":88,"kind":"单项选择题","answer":"C","stem":"江苏，得名于（ ）与苏州府之首字，简称苏。","options":{"A":"江东府","B":"江中府","C":"江宁府","D":"江州府"},"clips":[[128,"images/13bd3ecc145dac231a35bf7a.webp"],[129,"images/355e6dda9922404efb3b1e2d.webp"]]},{"n":89,"kind":"单项选择题","answer":"C","stem":"被《中国国家地理》杂志评为“中国最美沙漠”的是（ ）。","options":{"A":"腾格里沙漠","B":"克什克腾沙漠","C":"巴丹吉林沙漠","D":"塔克拉玛干沙漠"},"clips":[[129,"images/798b2cb9ddf5905dafb6c968.webp"],[130,"images/e9efcd4964dd6cdc11bd016b.webp"]]},{"n":90,"kind":"单项选择题","answer":"D","stem":"中国现存最大的皇家宫苑是（ ）。","options":{"A":"颐和园","B":"恭王府","C":"拙政园","D":"承德避暑山庄"},"clips":[[130,"images/6c57b19849abb36b333b4f55.webp"],[131,"images/fcff05a86b84a13c2af338df.webp"]]},{"n":91,"kind":"单项选择题","answer":"C","stem":"被公认为天津一绝，是著名的汉族传统手工艺品之一的是（ ）。","options":{"A":"魏记风筝","B":"杨柳青年画","C":"泥人张彩塑","D":"黑陶制作技艺"},"clips":[[132,"images/2614c6a37d8223b3b76f04ee.webp"],[133,"images/8db8c96a25f794558e44b72a.webp"]]},{"n":92,"kind":"单项选择题","answer":"B","stem":"福建客家人聚族而居，（ ）被称为中国传统民居的瑰宝。","options":{"A":"古厝","B":"土楼","C":"碉楼","D":"骑楼"},"clips":[[134,"images/b399d3e96dfa010437250224.webp"],[135,"images/b403880caa9579da885e4f63.webp"],[136,"images/b1b161b2e861925811c9c9f1.webp"],[137,"images/2ba7683668eeba4e00cdb5b6.webp"]]},{"n":93,"kind":"单项选择题","answer":"B","stem":"海南“海产八珍”之首是（ ）。","options":{"A":"和乐蟹","B":"海参","C":"鲍鱼","D":"鱼翅"},"clips":[[137,"images/c4296729d155bea2a879fdb6.webp"]]},{"n":94,"kind":"单项选择题","answer":"B","stem":"广西（ ）驰名中外，历代皆誉之为“国宝”，作为进贡皇上的贡品。","options":{"A":"壮锦","B":"合浦珍珠","C":"钦江坭兴陶","D":"桂林三花酒"},"clips":[[138,"images/475f5dc142a61bc76c65b9a8.webp"]]},{"n":95,"kind":"单项选择题","answer":"D","stem":"蒙古族文学史上第一篇历史小说是（ ）。","options":{"A":"《江格尔》","B":"《蒙古秘史》","C":"《蒙古黄金史》","D":"《乌巴什洪台吉》"},"clips":[[138,"images/afbd802f607a96009bd6f23e.webp"],[139,"images/ddcaa18c3b54a021e8790ba2.webp"],[140,"images/e21094e763861483e7d1749c.webp"]]},{"n":96,"kind":"单项选择题","answer":"A","stem":"以下属于粤菜的经典菜品的是（ ）。","options":{"A":"深井烧鹅","B":"三丝敲鱼","C":"荔枝肉","D":"清汤燕窝"},"clips":[[141,"images/6c13d0aedbf2f3c350a5ad53.webp"],[142,"images/9a2c02fca11edafffa24c628.webp"],[143,"images/207bf2336ba7c15c3987cf1e.webp"],[144,"images/df75261b18b80a09b98bca5d.webp"],[145,"images/c19350fa661475bbd5b2e78a.webp"],[146,"images/ccbdfbf503ec319dee57b446.webp"],[147,"images/d927ea1a4074dac73bf7a28a.webp"]]},{"n":97,"kind":"单项选择题","answer":"A","stem":"（ ）出土了后母戊鼎，是中国首个有文献可考、甲骨文证实的古代都城遗址。","options":{"A":"安阳殷墟","B":"二里头遗址","C":"屈家岭文化遗址","D":"泥河湾遗址"},"clips":[[147,"images/3995e976bc6ab33760df2240.webp"],[148,"images/915b7228db3525dd9e02448c.webp"]]},{"n":98,"kind":"单项选择题","answer":"C","stem":"北京中轴线被称为“古都的灵魂和脊梁”，南端为（ ）。","options":{"A":"地安门","B":"天安门","C":"永定门","D":"正阳门"},"clips":[[148,"images/b7c552daa23195d6673a2708.webp"],[149,"images/1d5070f361d721db39536320.webp"],[150,"images/4616a36dca407113e39a35ee.webp"],[151,"images/37baf5a59e0da819da335b7d.webp"]]},{"n":99,"kind":"单项选择题","answer":"B","stem":"因张艺谋拍摄影片《大红灯笼高高挂》而闻名的是山西的（ ）。","options":{"A":"祁县渠家大院","B":"祁县乔家大院","C":"灵石王家大院","D":"榆次常家庄园"},"clips":[[151,"images/83ff5dc0b8689f7087c5845b.webp"],[152,"images/9b7dab4f54e8d5e80041e8fe.webp"]]},{"n":100,"kind":"单项选择题","answer":"B","stem":"上海地势低平，处于长江三角洲冲积平原上，北部的长江口有我国第三大岛（ ）。","options":{"A":"长兴岛","B":"崇明岛","C":"舟山岛","D":"横沙岛"},"clips":[[153,"images/f82bd0e6861dd5a58a184baf.webp"],[154,"images/eaee04ccef7a6cbd3f2c4d53.webp"]]},{"n":101,"kind":"单项选择题","answer":"A","stem":"福建（ ）是中国乃至世界的重要鞋业生产基地，是世界鞋都。","options":{"A":"晋江","B":"福州","C":"泉州","D":"厦门"},"clips":[[155,"images/31550a95cff9df19dbc7e8c0.webp"],[156,"images/b665b71649f1a762c8bde8ba.webp"],[157,"images/2ba7683668eeba4e00cdb5b6.webp"]]},{"n":102,"kind":"单项选择题","answer":"D","stem":"中华苏维埃共和国临时中央政府设在（ ），被称为红都。","options":{"A":"上饶","B":"南昌","C":"古田","D":"瑞金"},"clips":[[157,"images/744dfbc5310e9739040b95dd.webp"],[158,"images/421cc9717dd446d989bbadec.webp"],[159,"images/a60c157e1b3e9870871efc4c.webp"],[160,"images/505d6256145e4d0364a4b270.webp"]]},{"n":103,"kind":"单项选择题","answer":"A","stem":"（ ）被誉为“中华之魂”。","options":{"A":"泰山","B":"黄山","C":"峨眉山","D":"武夷山"},"clips":[[160,"images/40f91ebca5f9c90ee5a63989.webp"],[161,"images/2bfb0c644305564bd196f1a6.webp"]]},{"n":104,"kind":"单项选择题","answer":"A","stem":"湖南因大部分区域处于（ ）以南而得名“湖南”。","options":{"A":"洞庭湖","B":"鄱阳湖","C":"太湖","D":"洪泽湖"},"clips":[[161,"images/057cbb0cc6a62a539bbd348f.webp"],[162,"images/a2eef972f4148ed00f09f268.webp"]]},{"n":105,"kind":"单项选择题","answer":"B","stem":"安徽满族以（ ）为姓。","options":{"A":"富察","B":"完颜","C":"瓜尔佳","D":"叶赫那拉"},"clips":[[162,"images/0a4d961599dcdab84678ac02.webp"],[163,"images/ff7ae741c91e41e272462fd5.webp"]]},{"n":106,"kind":"单项选择题","answer":"A","stem":"（ ）是中国“洋家乐”发源地。","options":{"A":"莫干山镇","B":"安吉余村","C":"肇兴侗寨","D":"成都农科村"},"clips":[[164,"images/11fa28b76868bb51f9a6cf95.webp"]]},{"n":107,"kind":"单项选择题","answer":"C","stem":"有“天下第一名社”之誉的西泠印社，第一任社长是（ ）。","options":{"A":"王福庵","B":"潘天寿","C":"吴昌硕","D":"任柏年"},"clips":[[164,"images/3c770d3dab6e82777c042edd.webp"],[165,"images/72409acfc4b9c4ac6c2e0270.webp"]]},{"n":108,"kind":"单项选择题","answer":"A","stem":"（ ）是世界旅游组织、亚太旅游协会“旅游趋势与展望国际论坛”的永久举办地。","options":{"A":"桂林市","B":"北京市","C":"上海市","D":"海口市"},"clips":[[166,"images/7c74854fa93401f8afe6b11e.webp"]]},{"n":109,"kind":"单项选择题","answer":"B","stem":"（ ）是中国第一个全部城镇化的城市。","options":{"A":"广州市","B":"深圳市","C":"珠海市","D":"汕头市"},"clips":[[166,"images/2d1ce7afadf898b92d71b5b8.webp"],[167,"images/e891565d97f536294fcd2334.webp"],[168,"images/fc0e72da10ae5a4b0a716937.webp"],[169,"images/ff38b324c96c8d919796b9e1.webp"]]},{"n":110,"kind":"单项选择题","answer":"B","stem":"历史上著名的“淝水之战”发生在（ ）。","options":{"A":"山东省","B":"安徽省","C":"江苏省","D":"浙江省"},"clips":[[169,"images/07977dbb5541d19405a19aa7.webp"],[170,"images/62f537ee2ba4299c3849f69e.webp"],[171,"images/5ef77d225b559562e7864ace.webp"]]},{"n":111,"kind":"单项选择题","answer":"C","stem":"中国正式恢复对澳门行使主权的时间是（ ）。","options":{"A":"1997 年 7 月 1 日","B":"1998 年 10 月 10 日","C":"1999 年 12 月 20 日","D":"2000 年 1 月 1 日"},"clips":[[171,"images/db6aabd18d63e721039e2e4a.webp"],[172,"images/949ecd9f203fc9fbfdaa8bb8.webp"],[173,"images/2d117eff9b311821b805c99b.webp"],[174,"images/18fa49a17b6c5935317c8c7f.webp"]]},{"n":112,"kind":"单项选择题","answer":"C","stem":"下列位于云南省的景区中，属于世界遗产的是（ ）。","options":{"A":"腾冲地热火山","B":"丽江玉龙雪山","C":"云南石林","D":"昆明滇池"},"clips":[[174,"images/8cd55c94572403cce546b28d.webp"],[175,"images/5bc94631e031ecb4b5741a52.webp"],[176,"images/817121fe6cc9037fd8e99e0c.webp"]]},{"n":113,"kind":"单项选择题","answer":"C","stem":"重庆多雾，有“雾都”之称。璧山区的云雾山全年雾日多达（ ），堪称“世界之最”。","options":{"A":"150 天","B":"189 天","C":"204 天","D":"260 天"},"clips":[[176,"images/785dba65b012665752f75185.webp"],[177,"images/b3b2eb44b29678b1bcdb3d12.webp"],[178,"images/ad87ec799b6cb7708b3d9a55.webp"]]},{"n":114,"kind":"单项选择题","answer":"A","stem":"下列被收录入《世界遗产名录》的项目中，属于双重遗产的是（ ）。","options":{"A":"安徽黄山","B":"贵州梵净山","C":"江西三清山","D":"新疆天山"},"clips":[[178,"images/1b48bfece6c08e0d9bd0fef4.webp"],[179,"images/f4d0df8d581b8fc8199764db.webp"],[180,"images/997d697db43e85ea6f0f9c7c.webp"]]},{"n":115,"kind":"单项选择题","answer":"B","stem":"下列省（区）中，被誉为东方糖库的是（ ）。","options":{"A":"澳门","B":"台湾","C":"江苏","D":"香港"},"clips":[[180,"images/d59e21184568a1c8b78154d7.webp"]]},{"n":116,"kind":"单项选择题","answer":"A","stem":"镇海楼是一座极具中国古典色彩的建筑，其位于香港（ ）。","options":{"A":"浅水湾","B":"金紫荆广场","C":"太平山","D":"海洋公园"},"clips":[[181,"images/4a7c61d1062eba46930715b2.webp"],[182,"images/b349283b3f42458ef2ee819a.webp"],[183,"images/b349283b3f42458ef2ee819a.webp"],[184,"images/b349283b3f42458ef2ee819a.webp"],[185,"images/18fa49a17b6c5935317c8c7f.webp"]]},{"n":117,"kind":"单项选择题","answer":"B","stem":"我国面积最大的湿地类型国家级自然保护区是（ ）。","options":{"A":"隆宝","B":"三江源","C":"可可西里","D":"柴达木梭梭林"},"clips":[[185,"images/07cce7f516111b9d090a16ae.webp"],[186,"images/260cb67d5255f1c954c53eca.webp"]]},{"n":118,"kind":"单项选择题","answer":"D","stem":"（ ）最喜爱喝奶茶和麦茶，十分敬重“舅亲”，认为“铁出炉家，人出舅家”。","options":{"A":"壮族","B":"土族","C":"土家族","D":"撒拉族"},"clips":[[187,"images/b650e26caf0650e096649947.webp"],[188,"images/803faf68d6eacd2b78d9d948.webp"],[189,"images/1b02bd67263290c50c2e1f69.webp"]]},{"n":119,"kind":"单项选择题","answer":"D","stem":"（ ）是红军长征活动时间最长、到达部队最多、活动范围最广的省份。","options":{"A":"陕西","B":"贵州","C":"四川","D":"甘肃"},"clips":[[189,"images/33ba3908fdc750eff758fa14.webp"],[190,"images/ebd337c3299ec6bd326cb44e.webp"],[191,"images/9e134c6eecf4f3dc97ef9a6e.webp"]]},{"n":120,"kind":"单项选择题","answer":"B","stem":"西部唯一的国家葡萄酒原产地保护区玉泉葡萄庄园位于（ ）。","options":{"A":"山西","B":"宁夏","C":"青海","D":"甘肃"},"clips":[[191,"images/e46910efe12e3ae9205024d2.webp"],[192,"images/9ee5ec70fada57e44c09954b.webp"],[193,"images/e8d5ca1ceaa4ac2a63009b19.webp"]]},{"n":121,"kind":"单项选择题","answer":"B","stem":"云南（ ）被誉为“世界锡都”。","options":{"A":"瑞丽","B":"个旧","C":"迪庆","D":"蒙自"},"clips":[[194,"images/b05a44d0d67b5d1f422d7fb5.webp"],[195,"images/5edd8b3af63fe88e21dfceed.webp"],[196,"images/817121fe6cc9037fd8e99e0c.webp"]]},{"n":122,"kind":"单项选择题","answer":"A","stem":"驼峰航线是第二次世界大战中盟军开辟的由（ ）至中国西南地区的空中运输线。","options":{"A":"印度","B":"缅甸","C":"东南亚","D":"苏联远东"},"clips":[[196,"images/a42b362ad821b4304d7f3bc8.webp"],[197,"images/705f411cedcce22f8c7ba447.webp"],[198,"images/817121fe6cc9037fd8e99e0c.webp"]]},{"n":123,"kind":"单项选择题","answer":"B","stem":"古代典籍中称“武王伐纣，前歌后舞”的军队指的是（ ）的军队。","options":{"A":"蜀人","B":"巴人","C":"楚人","D":"越人"},"clips":[[198,"images/d57eb60f225a227010c1f502.webp"],[199,"images/3da456e73f18c05861a4fe73.webp"],[200,"images/ad87ec799b6cb7708b3d9a55.webp"]]},{"n":124,"kind":"单项选择题","answer":"A","stem":"位于宁夏的著名响沙地旅游地是（ ）。","options":{"A":"沙坡头旅游区","B":"响沙湾景区","C":"巴里坤鸣沙山","D":"敦煌鸣沙山"},"clips":[[200,"images/2ea60162ea6d9cd47959d9f3.webp"]]},{"n":125,"kind":"单项选择题","answer":"C","stem":"“盛京三陵”指是清永陵、福陵、（ ）。","options":{"A":"泰陵","B":"神陵","C":"昭陵","D":"茂陵"},"clips":[[201,"images/49a4192ba91a8abadbf09384.webp"],[202,"images/e55b176302b15443d5fe1e99.webp"],[203,"images/ace1e1f5efc020203945de75.webp"],[204,"images/5a498a97e05b2cd100cfc81e.webp"]]},{"n":126,"kind":"单项选择题","answer":"A","stem":"1928 年 12 月，“东北易帜”的领导人是（ ）。","options":{"A":"张学良","B":"张宗昌","C":"张治中","D":"张作霖"},"clips":[[204,"images/afbbda6131fe21530a227c6d.webp"]]},{"n":127,"kind":"单项选择题","answer":"D","stem":"回甲宴是（ ）的庆祝仪式。","options":{"A":"满族","B":"回族","C":"苗族","D":"朝鲜族"},"clips":[[204,"images/61b66d1ba43be250e4f5e0ef.webp"],[205,"images/419b090d1d7b61dde3e6a526.webp"]]},{"n":128,"kind":"单项选择题","answer":"D","stem":"（ ）是四川最高峰，有“蜀山之王”美誉。","options":{"A":"四姑娘山","B":"青城山","C":"峨眉山","D":"贡嘎山"},"clips":[[205,"images/0d34bb580f0c13a2937cb585.webp"],[206,"images/9864c6ea3fcc17de20917073.webp"],[207,"images/49fe544dfe8cb748b02aeaa4.webp"],[208,"images/377b45aa538ff44e4f6bb406.webp"]]},{"n":129,"kind":"单项选择题","answer":"A","stem":"下列省份中，被称为“世界桥梁博物馆”的是（ ）。","options":{"A":"贵州省","B":"广东省","C":"福建省","D":"重庆市"},"clips":[[208,"images/7c8620781904a736aeab1dc5.webp"],[209,"images/1a69461eb6a9e7a9aa253c1b.webp"]]},{"n":130,"kind":"单项选择题","answer":"A","stem":"陕西简称“陕”或（ ）。","options":{"A":"秦","B":"渭","C":"青","D":"陇"},"clips":[[209,"images/6c47507efc468290770ccb97.webp"],[210,"images/dc0fcb8038d4cc83ea8368d0.webp"],[211,"images/df2f80a734d4ebf57e1c024d.webp"]]},{"n":131,"kind":"多项选择题","answer":"BCDE","stem":"元杂剧“四大悲剧”指的是（ ）。","options":{"A":"《墙头马上》","B":"《汉宫秋》","C":"《窦娥冤》","D":"《赵氏孤儿》","E":"《梧桐雨》"},"clips":[[211,"images/650805637fda81cbbd5e420c.webp"]]},{"n":132,"kind":"多项选择题","answer":"ACD","stem":"以下关于十一届三中全会，说法正确的有（ ）。","options":{"A":"1978 年在北京举行","B":"江泽民作《解放思想，实事求是，团结一致向前看》的重要讲话","C":"结束“以阶级斗争为纲”，实现了党和国家工作中心战略转移","D":"开启了改革开放和社会主义现代化建设新时期","E":"明确提出建设有中国特色的社会主义的重大命题和“小康”社会战略目标"},"clips":[[212,"images/e832843975e03112ae633236.webp"],[213,"images/8701b058f908bb5f050f3aa0.webp"],[214,"images/07a13bc2f478dc1bfacb487d.webp"]]},{"n":133,"kind":"多项选择题","answer":"ABDE","stem":"下列关于我国民族分布特点说法正确的有（ ）。","options":{"A":"人口总体呈现东南密、西北疏的特点","B":"汉族多聚居东南部，少数民族多居住在边疆地区","C":"各民族之间分界线清晰","D":"在少数民族聚居区一般都有一定数量的汉族居民","E":"形成大杂居、小聚居、交错居住的格局"},"clips":[[214,"images/8ac8e685a4330d199aad8e04.webp"]]},{"n":134,"kind":"多项选择题","answer":"BCD","stem":"下列关于粤绣说法正确的是（ ）。","options":{"A":"以狮、虎为代表题材","B":"以“金银线绣”和“垫绣”为核心技法，其中“垫绣”技法是粤绣的独创","C":"《百鸟朝凤》是粤绣的经典作品","D":"广东对外贸易发达，优质丝绸、丝线资源丰富，同时受岭南文化和海外文化的影响，形成了粤绣独特的艺术风格","E":"色彩淡雅清丽，多以柔和的冷色调为主"},"clips":[[215,"images/12a8d03cca8742f1b3e6d807.webp"],[216,"images/979ec92e7ed43304e25ab8fb.webp"]]},{"n":135,"kind":"多项选择题","answer":"ABCE","stem":"出席了中国共产党第一次全国代表大会的有（ ）。","options":{"A":"毛泽东","B":"李达","C":"董必武","D":"陈独秀","E":"包惠僧"},"clips":[[216,"images/51c1462fd52096c72b95b153.webp"],[217,"images/52d4ec9fd2a33ee120bb9b39.webp"]]},{"n":136,"kind":"多项选择题","answer":"ABCE","stem":"下列对“固知一死生为虚诞，齐彭殇为妄作”解读正确的是（ ）。","options":{"A":"出自王羲之的《兰亭集序》","B":"彭，指彭祖，传说中人物，说活了 800 多岁","C":"殇，未成年而死","D":"出自苏轼《赤壁赋》","E":"一、齐：同义，作动词用，齐一、等同的意思"},"clips":[[217,"images/ebc192b14b3d6c7e0daf45b9.webp"],[218,"images/888373a216519a419cb59876.webp"]]},{"n":137,"kind":"多项选择题","answer":"ABCD","stem":"中国著名的四大石窟指的是（ ）。","options":{"A":"麦积山石窟","B":"敦煌莫高窟","C":"龙门石窟","D":"云冈石窟","E":"大足石刻"},"clips":[[218,"images/605073359881a95b32ded201.webp"]]},{"n":138,"kind":"多项选择题","answer":"ACDE","stem":"银发旅游的特点有（ ）。","options":{"A":"慢节奏","B":"着重于“养、情、闲”","C":"重情怀","D":"性价比导向","E":"强社交"},"clips":[[219,"images/47e40294015392780edf743e.webp"],[220,"images/c4858692caebd9542bedc082.webp"],[221,"images/8bf27cfc18fc8da9bff32694.webp"]]},{"n":139,"kind":"多项选择题","answer":"CE","stem":"下列关于中国古代选官制度，说法正确的是（ ）。","options":{"A":"汉朝实行九品中正制","B":"征辟制是地方官向中央举荐人才的制度","C":"战国时期废井田、开阡陌，出现奖励军功的制度","D":"科举考试每两年举行一次，每次两轮","E":"曹操时实行“唯才是举”，规定只要有治国用兵之术，即使“不仁不孝”都可以选用"},"clips":[[221,"images/16bdb14cde40a4d401dc8294.webp"],[222,"images/d7322811f203f1dd90de7b4a.webp"],[223,"images/5799f31cd80ed7315cb386fc.webp"],[224,"images/3d728203a68f303f3e1fc427.webp"]]},{"n":140,"kind":"多项选择题","answer":"ACD","stem":"下列对江湖菜的表述正确的有（ ）。","options":{"A":"是相对于“正宗菜”而言的菜式，最先发迹于重庆","B":"命名讲究，有的取名古朴典雅","C":"具有“土、粗、杂”的特点","D":"来凤鱼是江湖菜的鼻祖，其他常见菜品还有酸菜鱼、口水鸡等","E":"口味以清、鲜、酥、嫩见长"},"clips":[[224,"images/142bdbcc2c973e95d60014b0.webp"],[225,"images/71ae7b543fca56773988169f.webp"],[226,"images/d2c6be075ff8489a1a00278c.webp"]]},{"n":141,"kind":"多项选择题","answer":"BE","stem":"下列属于潟湖的是（ ）。","options":{"A":"滇池","B":"西湖","C":"洞庭湖","D":"镜泊湖","E":"太湖"},"clips":[[227,"images/a76cce2c792faa1bd4362f12.webp"],[228,"images/4ccfd72f3c45fd1663067393.webp"]]},{"n":142,"kind":"多项选择题","answer":"BC","stem":"下列关于苏菜说法正确的是（ ）。","options":{"A":"善用清汤、奶汤增鲜","B":"用料广泛，刀工精细","C":"追求本味，清鲜平和，菜品风格雅丽、形质均美","D":"扒大乌参是苏菜名品","E":"以豆瓣酱为主调味料"},"clips":[[229,"images/3e7791b64329e64e1bfc630d.webp"],[230,"images/66013936052c6a41a4394e94.webp"]]},{"n":143,"kind":"多项选择题","answer":"ABD","stem":"战国时期的（ ）由春秋时期的晋国分裂而来，史称“三家分晋”。","options":{"A":"韩","B":"赵","C":"燕","D":"魏","E":"齐"},"clips":[[230,"images/d9895319f491bb8f969f3b31.webp"],[231,"images/af240385fc219a3fb7b63c70.webp"]]},{"n":144,"kind":"多项选择题","answer":"BCDE","stem":"我国著名的云海景观地有（ ）。","options":{"A":"五台山","B":"黄山","C":"庐山","D":"衡山","E":"峨眉山"},"clips":[[231,"images/a006d77d4eda8879f61c8511.webp"],[232,"images/6c46198908297eaa2c931c79.webp"],[233,"images/aadf099ad37cebcfd557ff9a.webp"]]},{"n":145,"kind":"多项选择题","answer":"ABCE","stem":"“楷书四大家”有（ ）。","options":{"A":"赵孟頫","B":"欧阳询","C":"颜真卿","D":"钟繇","E":"柳公权"},"clips":[[234,"images/64b6744ce815c881d79cc0bc.webp"],[235,"images/8b5e51c4115c55640fee722b.webp"],[236,"images/3d728203a68f303f3e1fc427.webp"]]},{"n":146,"kind":"多项选择题","answer":"BCD","stem":"伊斯兰教主要分为（ ）。","options":{"A":"格鲁派","B":"苏菲派","C":"逊尼派","D":"什叶派","E":"萨迦派"},"clips":[[236,"images/f3dce480cf8aee062b89398f.webp"],[237,"images/b8c8790182ab514245f023da.webp"]]},{"n":147,"kind":"多项选择题","answer":"BCD","stem":"阿里山三大名景指的是（ ）。","options":{"A":"蓝冰","B":"云海","C":"日出","D":"森林","E":"大龙湫"},"clips":[[237,"images/e45fe741e7c8a8c86a3adda7.webp"],[238,"images/0ebac06f187a98ffeae10275.webp"],[239,"images/47dfdca848a970bac1a4ab98.webp"],[240,"images/6b7042dbe5b04ee811716e47.webp"]]},{"n":148,"kind":"多项选择题","answer":"ABDE","stem":"浙江龙泉青瓷是汉族传统制瓷珍品，在南宋时达到巅峰，成品具有（ ）的特点。","options":{"A":"声如磬","B":"薄如纸","C":"硬如瓷","D":"青如玉","E":"明如镜"},"clips":[[240,"images/8800d72ae787948a2cf58c22.webp"]]},{"n":149,"kind":"多项选择题","answer":"ABDE","stem":"下列历史名人中，属于山东籍的是（ ）。","options":{"A":"孙武","B":"孔子","C":"白居易","D":"王羲之","E":"诸葛亮"},"clips":[[241,"images/2570455922ca2bdc3e69cadc.webp"]]},{"n":150,"kind":"多项选择题","answer":"AE","stem":"天津的景区中，（ ）是国家 5A 级旅游景区。","options":{"A":"盘山","B":"独乐寺","C":"黄崖关长城","D":"大沽口炮台","E":"天津古文化街"},"clips":[[241,"images/ca3bc7a55ecd115a0b8c30ee.webp"],[242,"images/4aae515a79eb26397b344b88.webp"],[243,"images/5def66eeba5277932717d3d5.webp"],[244,"images/c3001b3f6affb86bda347110.webp"]]},{"n":151,"kind":"多项选择题","answer":"ABDE","stem":"湖南省的中国历史文化名城，分别是（ ）。","options":{"A":"岳阳","B":"长沙","C":"张家界","D":"凤凰","E":"永州"},"clips":[[244,"images/0bcf4e69fa9c45f000553875.webp"],[245,"images/217439e97c01c05321013a05.webp"]]},{"n":152,"kind":"多项选择题","answer":"ABC","stem":"考古发现的河北保定满城西汉中山靖王刘胜夫妇墓，出土（ ）等稀世珍宝。","options":{"A":"金缕玉衣","B":"长信宫灯","C":"错金铜博山炉","D":"石磨盘及磨棒","E":"居延汉简"},"clips":[[246,"images/99cb961e1151ea07753f161f.webp"]]},{"n":153,"kind":"多项选择题","answer":"CDE","stem":"关于广东的经济发展水平及特色产业，说法符合事实的是（ ）。","options":{"A":"佛山卫浴、陶瓷出口居全国第一位","B":"广东机械产品全国市场占有率第一","C":"深圳电子信息制造业规模已占全国规模的 1/6，领跑全国","D":"形成了广州、深圳、佛山三个整车制造产业集群","E":"经济发展水平稳居全国首位，是中国第一经济大省"},"clips":[[247,"images/4725f0ef48d78bd071548088.webp"],[248,"images/fc38325116ac1479a587081d.webp"]]},{"n":154,"kind":"多项选择题","answer":"ABE","stem":"江西是中国烘焙业大省，下列关于江西烘焙产业的说法正确的有（ ）。","options":{"A":"资溪县被称为“中国面包之乡”","B":"杨坊村是“中国面包第一村”","C":"鲍师傅、泸溪河、詹记等品牌均出自江西金溪县","D":"江西是全国唯一拥有烘焙产业地理标志的省份","E":"鹰潭市有“中国烘焙之乡”“中式糕点之乡”“中国桃酥之乡”的美誉"},"clips":[[249,"images/f42af3349c9e3b04078eae07.webp"],[250,"images/56a54c662248d1fd6403552b.webp"],[251,"images/505d6256145e4d0364a4b270.webp"]]},{"n":155,"kind":"多项选择题","answer":"ABCD","stem":"土家族主要居住在（ ）一带的崇山之中。","options":{"A":"湖南","B":"湖北","C":"贵州","D":"重庆","E":"广西"},"clips":[[251,"images/6c29d6bdc06b09d1b6eaa88e.webp"],[252,"images/4eb8e7c51979e10d40b3b792.webp"],[253,"images/4afb767c92889fafb895e9c6.webp"]]},{"n":156,"kind":"多项选择题","answer":"ABC","stem":"（ ）为中国四大名亭。","options":{"A":"爱晚亭","B":"醉翁亭","C":"湖心亭","D":"岳麓亭","E":"回雁亭"},"clips":[[253,"images/52bc7fbd88e3d801e2e01391.webp"],[254,"images/343d87b001927e1fbbe29973.webp"],[255,"images/49c7048e569550bb245ab011.webp"],[256,"images/ff38b324c96c8d919796b9e1.webp"]]},{"n":157,"kind":"多项选择题","answer":"ABCD","stem":"陆家嘴境内有（ ）等现代化建筑楼群。","options":{"A":"东方明珠广播电视塔","B":"上海中心大厦","C":"上海环球金融中心","D":"上海金茂大厦","E":"上海迪士尼乐园"},"clips":[[256,"images/f6d98a0ce0a2bce5f34a42fb.webp"]]},{"n":158,"kind":"多项选择题","answer":"ABC","stem":"成都有（ ）等别称。","options":{"A":"“龟城”","B":"“锦官城”","C":"“蓉城”","D":"“山城”","E":"“春城”"},"clips":[[257,"images/b723fe8dac30b660418f1f95.webp"],[258,"images/a963b7bae8d5dfb8ce2af446.webp"],[259,"images/ff38b324c96c8d919796b9e1.webp"]]},{"n":159,"kind":"多项选择题","answer":"ABDE","stem":"下列关于《福乐智慧》的说法中，正确的是（ ）。","options":{"A":"是反映当时社会、历史、文化的史诗性的著作","B":"表达了作者对一系列社会、自然等问题的看法","C":"它的学术价值和历史意义主要在纯文学的范围","D":"虚构了国王日出和大臣月圆、大臣之子贤明及隐者觉醒 4 个象征人物之间的对话","E":"是 11 世纪中后期喀喇汗王朝政治家、文学家玉素甫·哈斯·哈吉甫用回鹘文创作的一部劝诫性长诗"},"clips":[[259,"images/90a95ce1b84bab24f3e3d656.webp"],[260,"images/31048ea161e829277510becc.webp"],[261,"images/756c341f00bf10c72c0ff8b3.webp"]]},{"n":160,"kind":"多项选择题","answer":"CDE","stem":"陕西省的自然资源丰富，主要有（ ）。","options":{"A":"丝绸之路（陕西段）","B":"秦始皇陵及兵马俑坑","C":"秦晋交界处的黄河壶口瀑布","D":"西安周边的终南山、翠华山","E":"华阴市的西岳华山、横跨眉县、太白、周至三县的太白山"},"clips":[[261,"images/fbc7d4c4313bc0f60bfda1ba.webp"],[262,"images/b13026675f62e4401e995c00.webp"],[263,"images/df2f80a734d4ebf57e1c024d.webp"]]},{"n":161,"kind":"多项选择题","answer":"ABCE","stem":"藏族有着自己独特的食品和饮食习惯，被称为西藏饮食“四宝”的是（ ）。","options":{"A":"酥油","B":"糌粑","C":"茶叶","D":"青稞酒","E":"牛羊肉"},"clips":[[263,"images/0d6682acf967aaf3bc0f680b.webp"],[264,"images/4be3a3c5d206277807a94b10.webp"],[265,"images/ffcb2879f714336016e14a33.webp"],[266,"images/b10671908a0a64d2fc9affe2.webp"]]},{"n":162,"kind":"多项选择题","answer":"ABE","stem":"辽宁是中国三大造船基地之一。下列著名舰船由大连船舶重工研制的有（ ）。","options":{"A":"“辽宁舰”航母","B":"“山东舰”航母","C":"“福建舰”航母","D":"蛟龙号载人潜水器","E":"30.8 万吨超大型原油船“凯力轮”"},"clips":[[266,"images/eb5f27468012b703d7e4a289.webp"],[267,"images/cfd07f38d922b3670d37ef8d.webp"],[268,"images/9f6b8f924cc2048e7d49f0c4.webp"],[269,"images/6547fb19cbf5028ad4510bbf.webp"]]},{"n":163,"kind":"多项选择题","answer":"DE","stem":"重庆渝东南民族地区一区四县是全市少数民族人口聚居区，主要世居少数民族是（ ）。","options":{"A":"羌族","B":"藏族","C":"傈僳族","D":"土家族","E":"苗族"},"clips":[[270,"images/23e1d2e4714ca2dfbda02675.webp"]]},{"n":164,"kind":"多项选择题","answer":"BC","stem":"历史上，香港曾被（ ）国家入侵。","options":{"A":"美国","B":"英国","C":"日本","D":"法国","E":"荷兰"},"clips":[[271,"images/d278eab6646f9e77c1b4e2c9.webp"]]},{"n":165,"kind":"多项选择题","answer":"ABCDE","stem":"宁夏打造旅游“1 号公路”，从银川起直到固原，连通起（ ）等景区。","options":{"A":"彭阳县梯田","B":"乔家渠毛泽东长征宿营地","C":"红寺堡国家扶贫移民遗址","D":"同心下马关明长城遗址","E":"水洞沟景区"},"clips":[[271,"images/00d536a547c76bcfa368830c.webp"],[272,"images/1fea23de4d04b7d21a481ea3.webp"]]}]</script>
+<script>
+'use strict';
+const questions=JSON.parse(document.getElementById('question-data').textContent);
+const el=id=>document.getElementById(id);
+const key='beikao-2026-paper3-subject34-quiz-v1';
+const answerText={对:'正确',错:'错误'};
+const sorted=values=>[...values].sort().join('');
+const isCorrect=(q,values)=>sorted(values)===sorted(q.answer);
+let results={}, retryResults={}, retryIds=null, retryOrder={}, position=1, mode="all", selection=new Set();
+try{
+  const state=JSON.parse(localStorage.getItem(key)||'null');
+  if(state){
+    position=Number.isInteger(state.position)&&questions[state.position-1]?state.position:1;
+    if(state.mode==="wrong"||state.mode==="retry")mode=state.mode;
+    if(Array.isArray(state.retryIds))retryIds=new Set(state.retryIds);
+    for(const q of questions){
+      const values=state.results?.[q.n];
+      if(Array.isArray(values)&&values.length&&new Set(values).size===values.length&&values.every(v=>Object.hasOwn(q.options,v))&&(q.kind==='多项选择题'||values.length===1)){
+        results[q.n]=values;
+        const order=state.retryOrder?.[q.n];
+        if(Array.isArray(order)&&sorted(order)===sorted(Object.keys(q.options))){
+          retryOrder[q.n]=order;
+        }
+        const retry=state.retryResults?.[q.n];
+        if(!isCorrect(q,values)&&(!retryIds||retryIds.has(q.n))&&Array.isArray(retry)&&retry.length&&
+           new Set(retry).size===retry.length&&retry.every(v=>Object.hasOwn(q.options,v))&&
+           (q.kind==='多项选择题'||retry.length===1)){
+          retryResults[q.n]=retry;
+        }
+      }
+    }
+  }
+}catch{el('storage').hidden=false;}
+const quizTimer=createQuizTimer(key,()=>questions.every(q=>Boolean(results[q.n])));
+function save(){
+  quizTimer.sync();
+  try{localStorage.setItem(key,JSON.stringify({position,results,retryResults,retryOrder,mode,retryIds:retryIds?[...retryIds]:null}));}
+  catch{el('storage').hidden=false;}
+}
+function wrongQuestions(){
+  return questions.filter(q=>results[q.n]&&!isCorrect(q,results[q.n]));
+}
+function retryQuestions(){
+  return wrongQuestions().filter(q=>!retryIds||retryIds.has(q.n));
+}
+function pool(){
+  if(mode==='all')return questions;
+  return mode==='retry'?retryQuestions():wrongQuestions();
+}
+function optionOrder(q){
+  const letters=Object.keys(q.options);
+  if(mode!=='retry'||q.kind==='判断题')return letters;
+  if(!retryOrder[q.n]){
+    for(let i=letters.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [letters[i],letters[j]]=[letters[j],letters[i]];
+    }
+    retryOrder[q.n]=letters;
+    save();
+  }
+  return retryOrder[q.n];
+}
+function activeResults(){return mode==='retry'?retryResults:results;}
+if(mode!=='all'&&!pool().some(q=>q.n===position)){
+  position=pool()[0]?.n||position;
+}
+let showingReport=mode==='all'&&Object.keys(results).length===questions.length;
+const pointsByType={'判断题':0.5,'单项选择题':0.5,'多项选择题':1};
+
+function renderReport(){
+  let total=0;
+  let maximum=0;
+  const rows=[];
+  for(const [kind,points] of Object.entries(pointsByType)){
+    const section=questions.filter(q=>q.kind===kind);
+    const correct=section.filter(q=>results[q.n]&&isCorrect(q,results[q.n])).length;
+    const score=correct*points;
+    const max=section.length*points;
+    total+=score;
+    maximum+=max;
+    const row=document.createElement('tr');
+    for(const value of [kind,correct,section.length-correct,`${score} / ${max}`]){
+      const cell=document.createElement('td');
+      cell.textContent=value;
+      row.append(cell);
+    }
+    rows.push(row);
+  }
+  el('total-score').textContent=`${total} / ${maximum} 分`;
+  el('subscores').replaceChildren(...rows);
+}
+function focusQuestion(){
+  if(showingReport){
+    el('report-title').focus();
+    return;
+  }
+  (el('options').querySelector('button:not(:disabled)')||el('stem')).focus();
+}
+function jump(n){
+  showingReport=false;
+  position=n;
+  selection.clear();
+  save();
+  render();
+  focusQuestion();
+}
+function render(){
+  const wrong=wrongQuestions();
+  const list=pool();
+  const index=list.findIndex(q=>q.n===position);
+  const q=list[index];
+  const retrying=mode==='retry';
+  const answers=activeResults();
+  el('all').setAttribute('aria-pressed',String(mode==='all'));
+  el('mistakes').setAttribute('aria-pressed',String(mode==='wrong'));
+  const retryList=retryQuestions();
+  const retryCount=Object.keys(retryResults).length;
+  const retryWrong=retryList.filter(q=>retryResults[q.n]&&!isCorrect(q,retryResults[q.n])).length;
+  const roundDone=retryList.length>0&&retryCount===retryList.length;
+  el('retry').hidden=mode==='all'||!retryList.length||(retrying&&(!roundDone||!retryWrong));
+  el('retry').textContent=retrying?'继续重刷 '+retryWrong+' 道错题':retryCount?'查看重刷进度':'重刷错题';
+  el('retry').disabled=retrying&&!roundDone;
+  el('wrong-count').textContent=wrong.length;
+  const answered=Object.keys(results).length;
+  const total=retrying?retryList.length:questions.length;
+  const done=retrying?retryCount:answered;
+  el('progress-label').textContent=`${retrying?'重刷':'已答'} ${done} / ${total}`;
+  el('progress').max=total||1;
+  el('progress').value=done;
+  el('score').textContent=retrying
+    ? `本轮答对 ${done-retryWrong} · 答错 ${retryWrong}${roundDone&&!retryWrong?" · 全部答对":""}`
+    : `整卷答对 ${answered-wrong.length} · 答错 ${wrong.length} · 未答 ${questions.length-answered}`;
+  el('reset').disabled=answered===0;
+  el('show-report').hidden=showingReport||answered!==questions.length;
+  el('report').hidden=!showingReport;
+  el('card').hidden=showingReport;
+  el('index').hidden=showingReport||!q;
+  el('nav').hidden=showingReport||!q;
+  if(showingReport){
+    renderReport();
+    return;
+  }
+  el('options').replaceChildren();
+  el('clips').replaceChildren();
+  el('grid').replaceChildren();
+  el('actions').hidden=true;
+  el('result').hidden=true;
+  el('explanation').hidden=true;
+  el('question-face').hidden=false;
+  el('flip').hidden=true;
+  el('flip').textContent='查看解析 · 空格';
+  if(!q){
+    el('meta').textContent='错题';
+    el('stem').textContent='目前没有错题。';
+    return;
+  }
+  el('source-note').textContent=q.sourceNote||'';
+  el('source-note').hidden=!q.sourceNote;
+  const submitted=answers[q.n];
+  const multi=q.kind==='多项选择题';
+  el('meta').textContent=`第 ${q.n} 题 · ${q.kind}`;
+  el('stem').textContent=q.stem;
+  el('prev').disabled=index===0;
+  el('next').disabled=index===list.length-1;
+  el('original-order').hidden=!retrying||q.kind==='判断题';
+  const order=optionOrder(q);
+  const displayLetters=Object.keys(q.options);
+  for(const [index,letter] of order.entries()){
+    const label=q.options[letter];
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='option';
+    const marked=(submitted||[...selection]).includes(letter);
+    button.setAttribute('aria-pressed',String(marked));
+    button.disabled=Boolean(submitted);
+    if(q.kind!=='判断题'){
+      const prefix=document.createElement('b');
+      prefix.textContent=displayLetters[index];
+      button.append(prefix);
+    }
+    const text=document.createElement('span');
+    text.textContent=label;
+    button.append(text);
+    if(multi&&!submitted){
+      const mark=document.createElement('span');
+      mark.className='flag selection-mark';
+      mark.setAttribute('aria-hidden','true');
+      mark.textContent='✓ 已选';
+      button.append(mark);
+    }
+    if(submitted){
+      const correct=q.answer.includes(letter);
+      if(correct||marked){
+        button.classList.add(correct?'correct':'incorrect');
+        const flag=document.createElement('span');
+        flag.className='flag';
+        flag.textContent=correct?(marked?'已选 · 正确':'正确答案'):'已选 · 错误';
+        button.append(flag);
+      }
+    }else{
+      button.onclick=()=>{
+        if(!multi){selection=new Set([letter]);submit();return;}
+        if(selection.has(letter)){selection.delete(letter);}else{selection.add(letter);}
+        button.setAttribute('aria-pressed',String(selection.has(letter)));
+        el('submit').disabled=selection.size===0;
+      };
+    }
+    el('options').append(button);
+  }
+  if(!submitted&&multi){
+    el('actions').hidden=false;
+    el('submit').disabled=selection.size===0;
+  }
+  if(submitted){
+    const right=isCorrect(q,submitted);
+    const result=el('result');
+    result.classList.toggle('wrong',!right);
+    result.textContent=`${right?'答对了':'答错了'} · 正确答案 ${answerText[q.answer]||order.flatMap((letter,index)=>q.answer.includes(letter)?[displayLetters[index]]:[]).join('、')}`;
+    result.hidden=false;
+    for(const [page,base64] of q.clips){
+      const figure=document.createElement('figure');
+      const img=document.createElement('img');
+      img.src=base64;
+      img.alt=`第 ${q.n} 题原解析，PDF 第 ${page} 页`;
+      const caption=document.createElement('figcaption');
+      caption.textContent=`解析卷第 ${page} 页`;
+      figure.append(img,caption);
+      el('clips').append(figure);
+    }
+    el('flip').hidden=false;
+  }
+  for(const item of list){
+    const b=document.createElement('button');
+    b.textContent=item.n;
+    const values=answers[item.n];
+    const status=values?(isCorrect(item,values)?'答对':'答错'):'未作答';
+    b.setAttribute('aria-label',`第 ${item.n} 题，${status}`);
+    if(values)b.className=isCorrect(item,values)?'right':'wrong';
+    if(item.n===position)b.setAttribute('aria-current','true');
+    b.onclick=()=>{
+      el('index').open=false;
+      jump(item.n);
+    };
+    el('grid').append(b);
+  }
+}
+function submit(){
+  const q=questions[position-1];
+  const answers=activeResults();
+  if(!selection.size||answers[q.n])return;
+  answers[q.n]=[...selection];
+  selection.clear();
+  save();
+  render();
+  el('result').scrollIntoView({block:'nearest'});
+}
+function flipCard(){
+  const showExplanation=el('explanation').hidden;
+  el('question-face').hidden=showExplanation;
+  el('explanation').hidden=!showExplanation;
+  el('flip').textContent=showExplanation?'返回题目 · 空格':'查看解析 · 空格';
+  el(showExplanation?'ex-title':'stem').focus();
+}
+function move(delta){
+  const list=pool();
+  const index=list.findIndex(q=>q.n===position);
+  const target=list[index+delta];
+  if(target)jump(target.n);
+}
+document.addEventListener('keydown',event=>{
+  if(event.defaultPrevented||event.isComposing||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey)return;
+  if(event.target.closest('input, textarea, select, [contenteditable]'))return;
+  if(showingReport)return;
+  const index=el('index');
+  if(event.key==='ArrowUp'||event.key==='ArrowDown'){
+    if(index.open&&index.contains(document.activeElement))return;
+    const options=[...el('options').querySelectorAll('button:not(:disabled)')];
+    if(!options.length)return;
+    event.preventDefault();
+    const current=options.indexOf(document.activeElement);
+    const down=event.key==='ArrowDown';
+    const step=down?1:-1;
+    const next=current<0?(down?0:options.length-1):(current+step+options.length)%options.length;
+    options[next].focus();
+    return;
+  }
+  if(event.key===' '&&!el('flip').hidden&&
+      (!event.target.closest('button, summary, a')||event.target===el('flip'))){
+    event.preventDefault();
+    if(!event.repeat)flipCard();
+    return;
+  }
+  if(event.repeat)return;
+  if(/^[1-5]$/.test(event.key)){
+    if(index.open&&index.contains(document.activeElement))return;
+    const option=el('options').querySelectorAll('.option')[Number(event.key)-1];
+    if(!option||option.disabled)return;
+    if(event.key==='5'&&el('actions').hidden)return;
+    event.preventDefault();
+    option.focus();
+    option.click();
+    return;
+  }
+  const previousQuestion=event.key==='ArrowLeft'||event.key.toLowerCase()==='q';
+  const nextQuestion=event.key==='ArrowRight'||event.key.toLowerCase()==='w';
+  if(previousQuestion||nextQuestion){
+    if(el('nav').hidden||(index.open&&index.contains(document.activeElement)))return;
+    event.preventDefault();
+    move(previousQuestion?-1:1);
+    return;
+  }
+  if(event.key==='Escape'&&!index.hidden){
+    event.preventDefault();
+    if(index.open&&index.contains(document.activeElement)){
+      index.open=false;
+      if(el('explanation').hidden)focusQuestion();
+      else el('ex-title').focus();
+    }else{
+      index.open=true;
+      (index.querySelector('[aria-current="true"]')||index.querySelector('summary')).focus();
+    }
+  }
+  if(event.key!=='Enter'||el('nav').hidden)return;
+  if(event.target.closest('button:not(.option):not(#submit):not(#prev):not(#next), summary, a'))return;
+  event.preventDefault();
+  if(!el('actions').hidden){
+    submit();
+    return;
+  }
+  event.target.closest('.option:not(:disabled)')?.click();
+});
+function showReport(){
+  mode='all';
+  showingReport=true;
+  save();
+  render();
+  focusQuestion();
+}
+el('show-report').onclick=showReport;
+el('flip').onclick=flipCard;
+el('submit').onclick=submit;
+el('prev').onclick=()=>move(-1);
+el('next').onclick=()=>move(1);
+el('mistakes').onclick=()=>{
+  mode='wrong';
+  const list=pool();
+  jump(list.some(q=>q.n===position)?position:list[0]?.n||position);
+};
+el('retry').onclick=()=>{
+  let list=retryQuestions();
+  if(mode==='retry'){
+    if(!list.every(q=>retryResults[q.n]))return;
+    list=list.filter(q=>!isCorrect(q,retryResults[q.n]));
+    if(!list.length)return;
+    retryIds=new Set(list.map(q=>q.n));
+    retryResults={};
+    retryOrder={};
+  }
+  if(!list.length)return;
+  mode='retry';
+  jump((list.find(q=>!retryResults[q.n])||list[0]).n);
+};
+el('all').onclick=()=>{
+  mode='all';
+  jump(position);
+};
+el('reset').onclick=()=>{
+  if(!confirm('清空本卷的答题进度和错题记录？'))return;
+  results={};
+  quizTimer.reset();
+  retryResults={};
+  retryIds=null;
+  retryOrder={};
+  mode='all';
+  jump(1);
+};
+render();
+focusQuestion();
+</script>
+</body>
+</html>

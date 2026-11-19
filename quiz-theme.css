@@ -1,0 +1,87 @@
+.theme-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.theme-toggle {
+  font: inherit;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 4px 10px;
+  border: 1px solid #7ba59c;
+  border-radius: 9px;
+  color: white;
+  background: transparent;
+}
+
+.theme-toggle:hover { background: #ffffff18; }
+.theme-toggle:focus-visible { outline: 2px solid #a4ebd8; outline-offset: 2px; }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #eeeeee;
+  --muted: #bdbdbd;
+  --teal: #8ae1c6;
+  --line: #535353;
+  --soft: #213c35;
+  --red: #ffb4ad;
+  --blush: #422d2d;
+  --surface: #242424;
+}
+
+[data-theme="dark"] body { background: #151515; color: var(--ink); }
+[data-theme="dark"] header { background: #1d1d1d; }
+[data-theme="dark"] .card,
+[data-theme="dark"] section,
+[data-theme="dark"] button:where(:not(.theme-toggle)),
+[data-theme="dark"] select { background: var(--surface); border-color: var(--line); }
+[data-theme="dark"] a { color: var(--teal); }
+[data-theme="dark"] .page-header a,
+[data-theme="dark"] .unavailable,
+[data-theme="dark"] .locked,
+[data-theme="dark"] main a { border-color: var(--line); }
+[data-theme="dark"] .page-header a { border-color: #7ba59c; }
+[data-theme="dark"] .unavailable,
+[data-theme="dark"] .locked,
+[data-theme="dark"] .row-labels,
+[data-theme="dark"] .volume-total { color: var(--muted); }
+
+[data-theme="dark"] a.completed,
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] .toolbar button[aria-pressed="true"],
+[data-theme="dark"] .grid .right,
+[data-theme="dark"] .option.correct {
+  background: var(--soft);
+  border-color: #609e8a;
+  color: var(--teal);
+}
+
+[data-theme="dark"] .option:hover:not(:disabled) { background: var(--surface); border-color: #aaa; }
+[data-theme="dark"] .option[aria-pressed="true"]:not(:disabled) { background: var(--surface); border-color: var(--teal); }
+[data-theme="dark"] .option:focus:not(:disabled) { background: var(--surface); outline: 2px solid #d5d5d5; outline-offset: -3px; }
+[data-theme="dark"] .option.incorrect,
+[data-theme="dark"] .grid .wrong { background: var(--blush); border-color: #ad7069; color: var(--red); }
+[data-theme="dark"] .result:not(.wrong) { color: var(--teal); }
+[data-theme="dark"] .primary { background: #8ae1c6; color: #102820; border-color: #8ae1c6; }
+[data-theme="dark"] .grid button[aria-current="true"] { border-color: var(--teal); }
+
+.record-controls {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.record-controls button {
+  font: inherit;
+  padding: 8px 14px;
+  border: 1px solid #78968c;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.record-controls p { width: 100%; margin: 0; }

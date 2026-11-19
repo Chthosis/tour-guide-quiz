@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>贝考押题第 6 卷 · 刷题</title>
+<style>
+:root{color-scheme:light;--ink:#172a28;--muted:#536765;--teal:#09695e;--line:#dbe5e2;--soft:#e9f6f1;--red:#9c3835;--blush:#fff0ee}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7f5;color:var(--ink);font:16px/1.6 Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+button,select{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #0b806e;outline-offset:3px}
+#stem:focus,#ex-title:focus{outline:none}
+[hidden]{display:none!important}
+header{background:#173e38;color:white}
+.wrap{max-width:960px;margin:auto;padding:0 24px}
+.masthead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:28px;padding-bottom:27px}
+h1{font-size:clamp(23px,4vw,34px);line-height:1.24;margin:0;letter-spacing:-.035em}
+.subject{margin:4px 0 0;color:#d1e6e1;font-size:14px}
+.progress{min-width:140px;text-align:right;font-size:14px;color:#e2f1ed}
+progress{display:block;margin:6px 0 0 auto;width:100%;height:6px;border:none;border-radius:100px;overflow:hidden;background:#38605a}
+progress::-webkit-progress-bar{background:#38605a}
+progress::-webkit-progress-value{background:#8ae1c6}
+progress::-moz-progress-bar{background:#8ae1c6}
+main{padding-top:22px!important;padding-bottom:48px!important}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.controls,.nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,select{color:var(--ink);background:white;border:1px solid var(--line);border-radius:9px;padding:8px 14px}
+.toolbar button[aria-pressed="true"]{background:var(--soft);border-color:var(--teal);color:var(--teal)}
+#storage{color:var(--red);font-size:14px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(16px,4vw,32px);box-shadow:0 5px 18px #173e3808}
+.meta{font-size:14px;font-weight:650;color:var(--teal);margin:0 0 8px}
+h2{font-size:clamp(19px,2.7vw,25px);line-height:1.55;margin:0 0 19px}
+.options{display:grid;gap:9px}
+.option{width:100%;display:flex;align-items:baseline;gap:11px;text-align:left;padding:11px 13px}
+.option:hover:not(:disabled){background:#f5f5f5}
+.option[aria-pressed="true"]:not(:disabled){background:#e9e9e9}
+.option:focus:not(:disabled){outline:none;background:#dedede}
+.option b{min-width:25px;color:var(--muted)}
+.option.correct{border-color:#65a791;background:var(--soft);color:#145d50}
+.option.incorrect{border-color:#d38b84;background:var(--blush);color:var(--red)}
+.option[aria-pressed="true"] b,.option.correct b,.option.incorrect b{color:inherit}
+.flag{margin-left:auto;font-size:13px;white-space:nowrap}
+.actions{margin-top:17px}
+.primary{color:white;background:var(--teal);border-color:var(--teal);font-weight:650}
+button:disabled:not(.option){opacity:.47}
+.result{margin-top:20px;padding:12px 15px;border-radius:9px;background:var(--soft);color:#145d50;font-weight:650}
+.result.wrong{background:var(--blush);color:var(--red)}
+.nav{justify-content:space-between;margin-top:15px}
+.nav #flip{margin-inline:auto}
+.explanation h3{font-size:18px;margin:0 0 12px}
+figure{margin:0 0 12px}
+figure img{display:block;max-width:100%;height:auto;margin:auto}
+figcaption{font-size:12px;text-align:right;color:var(--muted);margin:4px 0}
+details{margin-top:15px}
+summary{cursor:pointer;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;margin:10px 0}
+.grid button{padding:5px 0}
+.grid .right{background:var(--soft)}
+.grid .wrong{background:var(--blush)}
+.grid button[aria-current="true"]{border:2px solid var(--teal);font-weight:700}
+@media(max-width:560px){.wrap{padding-left:14px;padding-right:14px}.masthead{align-items:flex-start}.progress{min-width:96px}.option{gap:7px}.flag{font-size:12px}}
+#report h2{margin-bottom:6px}
+#report-title:focus{outline:none}
+#total-score{font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--teal);margin:0 0 18px}
+#report table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}
+#report th,#report td{padding:10px 5px;border-bottom:1px solid var(--line)}
+
+.selection-mark{visibility:hidden;color:var(--teal);font-weight:650}
+.option[aria-pressed="true"] .selection-mark{visibility:visible}
+</style><link rel="stylesheet" href="quiz-theme.css"><script src="quiz-theme.js"></script><script src="quiz-timer.js"></script>
+</head>
+<body>
+<header><div class="wrap masthead">
+  <div><h1>贝考押题第 6 卷</h1><p class="subject">导游资格考试 · 科目一、二</p></div>
+  <div class="theme-controls"><button class="theme-toggle" type="button" hidden>切换到夜间</button><div class="progress"><span id="progress-label"></span><span id="quiz-timer" style="display:block;font-variant-numeric:tabular-nums"></span><progress id="progress" aria-label="答题进度"></progress></div></div>
+</div></header>
+<main class="wrap">
+  <nav aria-label="选卷" style="margin-bottom:12px"><a href="贝考押题卷-选卷.html">返回选卷</a></nav>
+  <div class="toolbar">
+    <div class="controls"><button id="all" aria-pressed="true">全部题目</button><button id="mistakes" aria-pressed="false">错题 <span id="wrong-count">0</span></button></div>
+    <div class="controls"><button id="show-report" hidden>完卷成绩</button><button id="retry" hidden>重刷错题</button><button id="reset">重新做题</button></div>
+  </div>
+  <p>本卷题面含扫描识别文字，原解析可按空格查看。</p>
+  <p id="score" role="status"></p>
+  <p id="storage" hidden role="status">浏览器无法保存进度，关闭页面后本次作答会清空。</p>
+  <section class="card" id="report" hidden aria-labelledby="report-title">
+    <h2 id="report-title" tabindex="-1">完卷成绩</h2>
+    <p id="total-score"></p>
+    <table>
+      <thead><tr><th scope="col">题型</th><th scope="col">答对</th><th scope="col">答错</th><th scope="col">得分</th></tr></thead>
+      <tbody id="subscores"></tbody>
+    </table>
+  </section>
+  <section class="card" id="card" aria-labelledby="meta">
+    <p class="meta" id="meta"></p>
+    <div id="question-face">
+      <h2 id="stem" tabindex="-1"></h2>
+      <div class="options" id="options" role="group" aria-labelledby="stem"></div>
+      <div class="actions" id="actions" hidden><button id="submit" class="primary" aria-keyshortcuts="Enter" title="快捷键：Enter" disabled>确认答案</button></div>
+      <div id="result" class="result" role="status" hidden></div>
+    </div>
+    <section id="explanation" class="explanation" hidden aria-labelledby="ex-title">
+      <h3 id="ex-title" tabindex="-1">原卷解析</h3><p id="original-order" hidden>原卷截图使用原选项顺序。</p><div id="clips"></div>
+    </section>
+    <nav class="nav" id="nav" aria-label="题目翻页"><button id="prev" aria-keyshortcuts="ArrowLeft" title="快捷键：← / Q">上一题</button><button id="flip" aria-controls="explanation" aria-keyshortcuts="Space" hidden>查看解析 · 空格</button><button id="next" class="primary" aria-keyshortcuts="ArrowRight" title="快捷键：→ / W">下一题</button></nav>
+  </section>
+  <details id="index"><summary aria-keyshortcuts="Escape" title="快捷键：Esc">题号导航</summary><div id="grid" class="grid"></div></details>
+</main>
+<script type="application/json" id="question-data">[{"n":1,"kind":"判断题","stem":"2025年文化和旅游发展统计公报显示，2025年全国 A级景区全年接待游客75.1亿人次。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[1,"images/ae241ff1f5885f5322053146.webp"]]},{"n":2,"kind":"判断题","stem":"第十二届中国旅游产业发展年会发布“跟着名著去旅行”活动倡议。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[1,"images/2a9e85be72f98351531c27b6.webp"]]},{"n":3,"kind":"判断题","stem":"2026年3月5日，李强总理代表国务院在十四届全国人大四次会议上作《政府工作报告》指出，清理消费领域不合理限制措施，释放文旅、赛事、康养等领域消费潜力。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[2,"images/11249f37a902239e56deb554.webp"]]},{"n":4,"kind":"判断题","stem":"下半旗时，应当先将国旗升至杆顶，然后降至旗顶与杆顶之间前距离为旗杆全长二分之一处。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[2,"images/fce1a4706adc12a02162ed54.webp"],[3,"images/62cdab57fbc5b4558bd66c6a.webp"]]},{"n":5,"kind":"判断题","stem":"以宗教活动场所为主要游览内容景区的规划建设，感当与宗教活动场所昀风格、坏境相协谓。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[3,"images/9e01e1c491021b18ef5b1ea5.webp"],[4,"images/36dc7e3f551889c2ba28af6d.webp"]]},{"n":6,"kind":"判断题","stem":"依据《旅游法》，旅游者人身、财产受到侵害前，有依法获得赔偿权利。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[4,"images/4a5c4445c5b0426f580fb63d.webp"]]},{"n":7,"kind":"判断题","stem":"《民法典》规定，不能完全辨认自己行为成年人为无民事行为能力人。（）","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[4,"images/bd48b05cfda2f730b360c4c3.webp"],[5,"images/f5685e039d194a2616ba8dd1.webp"]]},{"n":8,"kind":"判断题","stem":"《民法典》规定，当事人订立合同，只有书面和口头两种形式。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[5,"images/bbcec7b4e6c920cdf9ab0fe4.webp"],[6,"images/9abdcabc022ced7c37fb8631.webp"]]},{"n":9,"kind":"判断题","stem":"《民法典》规定，不可抗力是不能预见、不能避兔且不能克服客观情況。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[6,"images/c79b1b04f48d5fae9a47de24.webp"]]},{"n":10,"kind":"判断题","stem":"《民法典》规定，无民事行为能力人、限制民事行为能力人造成他人损害，监护人尽到监护责任，可以减轻或者免除其侵权责任。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[6,"images/8d00241f437f8c6520875a20.webp"],[7,"images/bd814445a7ccab9a9d0de030.webp"]]},{"n":11,"kind":"判断题","stem":"《旅行社条例》规定，旅行社每设立一个经营出境旅游业务分社，应当向其质量保证金账户增存20万元。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[7,"images/a8471ae245f6c75ad4f2ba87.webp"],[8,"images/e64cbb24948908f8bc4eee91.webp"]]},{"n":12,"kind":"判断题","stem":"导游证终身有效。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[8,"images/10e289bc67929f9ba547b196.webp"],[9,"images/84531e2b6b19d5f311def8e1.webp"]]},{"n":13,"kind":"判断题","stem":"消费者为生活或者经营需要购买、使用商品或者接受服务，其权益受到《消费者权益保护法》保护。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[9,"images/20a03a43d7b8dcdc1ea1f4d2.webp"]]},{"n":14,"kind":"判断题","stem":"“旅游不文明行为记录”信息保存期限为1年至5年，实行动态管理。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[9,"images/136377a3b65bd26200b676b7.webp"]]},{"n":15,"kind":"判断题","stem":"《文物保护法》规定，国家对于因被盗、非法出境等流失境外的文物，保留收回的权利，该权利时效期间为100年。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[10,"images/c96730a430de00216d2a86be.webp"]]},{"n":16,"kind":"判断题","stem":"《非物质文化遗产法》规定，开发利用非物质文化遗产代表性项目的，应当支持代表性传承人开展传承活动，保护属于该项目组成部分的实物或者场所。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[10,"images/4dcc6229277385c8012733e0.webp"],[11,"images/4612807134727414c0d8ac4f.webp"]]},{"n":17,"kind":"判断题","stem":"《保护非物质文化遗产公约》规定，各缔约国应努力做到制定一项总的政策，使非物质文化遗产在社会中发挥应有的作用，并将这种遗产前保护纳入规划工作。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[11,"images/077b6c4ae4dfc20b0a5af743.webp"]]},{"n":18,"kind":"判断题","stem":"习近平新时代中国特色社会主义思想提出形成以国内大循环为主体、国内国际双循坏相互促进新发展格局。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[11,"images/df1db685c5e5a462c0bba656.webp"],[12,"images/66199900fd31fefa59d186a8.webp"]]},{"n":19,"kind":"判断题","stem":"“十个明确”是习近平新时代中国特色社会主义思想基本方略的高度凝练。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[12,"images/3bfd98cc85407b67414c8d1d.webp"],[13,"images/b8dc6ecd98d9bcf3c2816d75.webp"]]},{"n":20,"kind":"判断题","stem":"《关于进一步规范旅游客运安全带使用保障游客出行安全有关工作的通知》指出，各地文化和旅游部门要督促指导旅行社将游客规范使用安全带作为旅游安全全链条管理重要坏节。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[13,"images/2a24b75ac02cb8659b54ee59.webp"]]},{"n":21,"kind":"判断题","stem":"1865年，托马斯•库克发明了一种流通券（旅行支票），更加方便了旅游者进行跨国和洲际旅游。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[13,"images/7ae9e15e76b4eb98c6ec9cdc.webp"],[14,"images/d9499889529211609f529344.webp"]]},{"n":22,"kind":"判断题","stem":"旅游者钓旅游证件，领队出团前必须进行查验，但不能复印使用。）","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[14,"images/7c9d3f8e2e7a17edeee41bdf.webp"],[15,"images/ee87666ceb4b0a16b6cb9ef2.webp"]]},{"n":23,"kind":"判断题","stem":"从广义钓角度来说，导游语言是指导游在旅游接待过程中所运用能传达信息所有符号系统。（）","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[15,"images/a702215d98ed2584d6ae374f.webp"],[16,"images/e323ee16750f58289aaeac4a.webp"]]},{"n":24,"kind":"判断题","stem":"旅游者抵达饭店后，待办理完住店登记手续后，由地陪导游分发房）卡。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[16,"images/ec5c259158ae7116fac7e78c.webp"]]},{"n":25,"kind":"判断题","stem":"导游旗形状以长方形或三角形为宜，颜色应鲜艳醒目，材质易于飘扬。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[17,"images/b783cf89c944a7e75646646f.webp"]]},{"n":26,"kind":"判断题","stem":"领队应恪守职业道德，遵守外事纪律。在工作过程中应维护国家利益和民族尊严，并提醒旅游者抵制任何有损国家利益和民族尊严韵言行。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[17,"images/2e5bce0ef80227ddc9b752d9.webp"]]},{"n":27,"kind":"判断题","stem":"“不识庐山真面目，只缘身在此山中。”说明观景赏美要注意保持一定的空间距离。（）","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[18,"images/a3fb498e0941df7a319b6e47.webp"]]},{"n":28,"kind":"判断题","stem":"如果旅游者在高铁上突患重病，全陪导游可以在高铁乘务员帮助下，通过列车上的广播系统在乘客中寻找医生对其进行初步急救。（）","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[18,"images/768d67d204534455180d0b8e.webp"],[19,"images/7c01252ab2e5203af85258ef.webp"]]},{"n":29,"kind":"判断题","stem":"指示手势语常用于表达带有强烈情感色彩的内容，感染力强。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[19,"images/0155043b2ecf8f8aa8f3e7c6.webp"],[20,"images/0e57dfb880ad81d1305019da.webp"]]},{"n":30,"kind":"判断题","stem":"个别旅游者在一地旅游期间，有时会要求导游提供信息或协助安排去不健康的娱乐场所，导游应当断然拒绝。（）","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[20,"images/1508fd2b598be07bf8e0d05c.webp"],[21,"images/cf0fa56684b4c448bdf4b7ba.webp"]]},{"n":31,"kind":"判断题","stem":"按照铁路部门发布的火车票退改签规定，无论是网上订票还是窗口订票，都只能改签1次。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[21,"images/d2ceb714618ddaf8c9325cef.webp"]]},{"n":32,"kind":"判断题","stem":"领队带领旅游者通过“中国检验检疫”柜台前，递交在返程飞机上填好《入境健康检疫申明卡》（必须填写），如无意外，即可通过检验检疫。","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[22,"images/d6ec43fa620181ecfe510d11.webp"]]},{"n":33,"kind":"判断题","stem":"导游讲解时运用闭目法，被形象地描述成“眼中无听众，心中有听众”。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[22,"images/8c7b8638397e445ba9ccd3b1.webp"],[23,"images/5584c114d8d9b15aa1dac969.webp"]]},{"n":34,"kind":"判断题","stem":"观赏齐白石的画，旅游者感到的不只是草木鱼虾，而是一种悠然自得、鲜活洒脱的情思意趣。这是属于审美感受层次中钓悦心悦意。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[23,"images/c7405784db439d601647151e.webp"],[24,"images/b8841314de22a2c3ad31be7a.webp"]]},{"n":35,"kind":"判断题","stem":"旅游者在接近用管时间或到餐厅后提出换管要求，导游应先婉言拒绝。（","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[24,"images/c8b5035cf0b5afa3093d7070.webp"],[25,"images/62bf84e49409aa92a675f59a.webp"]]},{"n":36,"kind":"判断题","stem":"旅游者如有对民航安检工作现场进行拍照、摄像，经民航安检机构警示拒不改正钓，将会被移交公安机关处理。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[25,"images/9515fa5c5c656a2d88f67473.webp"]]},{"n":37,"kind":"判断题","stem":"身高1.6米13周岁儿童，在乘坐实名制火车时，座购买儿童优惠票。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[26,"images/34282809abfafdab023599a5.webp"],[27,"images/76a065e7b1cf98023e7e6ebd.webp"]]},{"n":38,"kind":"判断题","stem":"旅游者遭遇自然灾害，导游应及时报警并向旅行社报告，同时向旅游者预警，引导旅游者采取相应的安全防范措施，立刻带领旅游者撤离灾区。（","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[27,"images/1479ef8598c866e56b72fcfe.webp"],[28,"images/502000f9f9054296f742aaf4.webp"]]},{"n":39,"kind":"判断题","stem":"边防检查的内容包括护照检查、证件检查、签证检查、出入境登记卡检查、行李物品检查、交通运输工具检查等。","options":{"对":"正确","错":"错误"},"answer":"对","clips":[[28,"images/d9f9f30b8676d3a30ae99f6a.webp"],[29,"images/b89a83177ba58a7d222bfd1f.webp"]]},{"n":40,"kind":"判断题","stem":"天合联盟是目前全球最大航空公司联盟，也是首个国际性航空联盟。（）","options":{"对":"正确","错":"错误"},"answer":"错","clips":[[29,"images/12ae32c0f8eafcfb472b6aee.webp"],[30,"images/b247d2de29b0daf847ab3b9f.webp"]]},{"n":41,"kind":"单项选择题","stem":"依据《完法》，除因（）需要由公安机关或者检察机关依照法律规定的程序对通信进行检查外，任何组织或者个人不得以任何理由侵犯公民的通信自由和通信秘密。","options":{"A":"保护国有财产或者国家安全","B":"国防安全或者社会安全","C":"维护公共秩序或者追查违法犯罪","D":"国家安全或者追查刑事犯罪"},"answer":"D","clips":[[30,"images/b6df69ceeca5f38e2514fdbe.webp"],[31,"images/f7cfc883e2af812c80c45882.webp"]]},{"n":42,"kind":"单项选择题","stem":"依据《宪法》，以下关于公民财产权表述，正确是（）。","options":{"A":"公民私有财产不受侵犯","B":"国家依照法律规定保护公民私有财产权和继承权","C":"国家可以依照法律规定对公民私有财产实行征收并给予赔偿","D":"国家为经济发展钓需要，可依法对公民的私有财产进行征用并给予补偿"},"answer":"B","clips":[[31,"images/792f2fbb7c24ce3663347670.webp"],[32,"images/80a93883711b3738b41a7088.webp"]]},{"n":43,"kind":"单项选择题","stem":"依据《宪法》，（）既是公民基本权利，也是公民基本义务。","options":{"A":"休息","B":"纳税","C":"受教育","D":"服兵役"},"answer":"C","clips":[[32,"images/7ae0bacf4f45dbe2c80eda3c.webp"],[33,"images/91bfaca39e5e744eba205f23.webp"]]},{"n":44,"kind":"单项选择题","stem":"《死法》规定，中华人民共和国是（）领导，以（） 为基础的人民民主专政社会主义国家。","options":{"A":"工农联盟：无产阶级","B":"工人阶级：工农联盟","C":"农民阶级；多党合作","D":"中国共产党：工人阶级"},"answer":"B","clips":[[33,"images/eff1eb95907a62433f53a021.webp"],[34,"images/97602b64a550ae9e9edad9bb.webp"]]},{"n":45,"kind":"单项选择题","stem":"依据《国歌法》，在公共场合，故意篡改国歌歌词、曲谱，以歪曲、贬损方式奏唱国歌，或者以其他方式侮辱国歌，由公安机关处以（）；构成犯罪，依法追究刑事责任。","options":{"A":"记过处分或者5日以下拘留","B":"警告或者5日以下拘留","C":"警告或者15日以下拘留","D":"500元罚款或者15日以下拘留"},"answer":"C","clips":[[34,"images/929c89bdb34632f7001e4d2f.webp"]]},{"n":46,"kind":"单项选择题","stem":"《香港特别行政区维护国家安全法》规定，任何人组织、策划、实施或者参与实施以武力、威胁使用武力或者其他非法手段旨在颠覆国家政权行为，即属（）。","options":{"A":"分裂国家罪","B":"恐怖活动罪","C":"颠覆国家政权罪","D":"危害国家安全罪"},"answer":"C","clips":[[35,"images/e52dadbd22b801e2ee9a3041.webp"]]},{"n":47,"kind":"单项选择题","stem":"《英雄烈士保护法》规定，侵害英雄烈士姓名、肖像、名誉、荣誉行为，英雄烈士没有近亲属或者近亲属不提起诉讼，（）可以依法向人民法院提起诉讼。","options":{"A":"公安机关","B":"检察机关","C":"法律援助志愿者","D":"英雄烈士生前所属单位"},"answer":"B","clips":[[36,"images/a2eecd10c91791ddf65426a8.webp"]]},{"n":48,"kind":"单项选择题","stem":"依据《英雄烈士保护法》，在（）和重要纪念日，机关、团体、乡村、社区、学校、企业事业单位和军队有关单位根据实际情况，组织开展英雄烈士纪念活动。","options":{"A":"春节","B":"清明节","C":"劳动节","D":"建军节"},"answer":"B","clips":[[36,"images/cc4ff64fb639cca947950ee8.webp"],[37,"images/b099ea8f8f674a01100f30c6.webp"]]},{"n":49,"kind":"单项选择题","stem":"《宗教事务条例》规定，为违法宗教活动提供条件，由宗教事务部门给予警告，有违法所得、非法财物，没收违法所得和非法财物，情节严重的，并处（） 罚款。","options":{"A":"1万元以上10万元以下","B":"2万元以上20万元以下","C":"3万元以上30万元以下","D":"5万元以上50万元以下"},"answer":"B","clips":[[37,"images/f6951351a16ab0e8b9021a46.webp"],[38,"images/b98d4c08fadb1ff35c080153.webp"]]},{"n":50,"kind":"单项选择题","stem":"《旅游法》规定，旅游业发展应当遵循（）相统一的原则。","options":{"A":"社会效益、经济效益和文化效益","B":"社会效益、经济效益和生态效益","C":"政治效益、经济效益和环境效益","D":"政治效益、经济效益和文化效益"},"answer":"B","clips":[[38,"images/72840477d2e83cc3bdbfd5fd.webp"]]},{"n":51,"kind":"单项选择题","stem":"依据《旅游法》，利用公共资源建设景区，不得通过增加另行收费项目等方式变相涨价，另行收费项目己收回投资成本的，（）。","options":{"A":"应当实行政府定价或者政府指导价","B":"应当相应降低价格或者取消收费","C":"应当立即取消收费","D":"应当逐步免费开放"},"answer":"B","clips":[[38,"images/63d01209a6d78ad1cd8a0d72.webp"],[39,"images/b34688ac80d3c922562f64f2.webp"]]},{"n":52,"kind":"单项选择题","stem":"《旅游法》规定，（业发展进行综合协调。","options":{"A":"国务院","B":"旅游行业组织） 建立健全旅游综合协调机制，对旅游","C":"文化与旅游部","D":"县级以上人民政府"},"answer":"A","clips":[[39,"images/5358bb4e924d6bc660fe3b98.webp"],[40,"images/763e2e1ce510af9ae35cf2d3.webp"]]},{"n":53,"kind":"单项选择题","stem":"《旅游法》规定，因未达到约定人数不能出团前，组团社经征得旅游者书面同意，可以委托其他旅行社履行合同，（）。","options":{"A":"组团社和受委托旅行社对旅游者承担连带责任","B":"组团社不承担责任，由受委托旅行社对旅游者承担责任","C":"组团社对旅游者承担责任，受委托前旅行社对组团社承担责任","D":"组团社和受委托的旅行社对旅游者承担责任，受委托旅行社也对组团社承担责任"},"answer":"C","clips":[[40,"images/c8b476b3aaca783dd0c28d02.webp"]]},{"n":54,"kind":"单项选择题","stem":"某旅行社组织团队旅游，与酒店签订合同约定为旅游团提供三星级住宿。入住时，酒店因客房满房，无法按约定提供住宿服务。依据《旅游法》，该酒店为旅游者安排了不低于三星标准住宿，由此增加的费用，应当田） 承担。","options":{"A":"组团社","B":"地接社","C":"住宿经营者","D":"地接社和住宿经营者"},"answer":"C","clips":[[41,"images/b152b71a5ed5f69f6560f8a0.webp"]]},{"n":55,"kind":"单项选择题","stem":"《民法典》规定，限制民事行为能力人实施的与其年龄、智力、精神健康状况不相适应的民事法律行为需要经法定代理人同意或者追认后有效的，相对人可以催告法定代理人自收到通知之日起（） 内予以追认。","options":{"A":"10日","B":"15日","C":"30日","D":"60日"},"answer":"C","clips":[[42,"images/085091cfe73e17b04a856828.webp"]]},{"n":56,"kind":"单项选择题","stem":"《民法典》规定，民事主体从事民事活动，感当遵循（合理确定各方权利和义务。）、","options":{"A":"诚信原则","B":"公平原则","C":"平等原则","D":"自愿原则"},"answer":"B","clips":[[43,"images/8120d81f32f7e2b78c626340.webp"],[44,"images/6169fd7e8ebbf3de4f05fd4f.webp"]]},{"n":57,"kind":"单项选择题","stem":"依据《民法典》，一方利用对方处于危困状态、缺乏判断能力等情形，致使民事法律行为成立时显失公平，受损害方有权请求人民法院或者仲裁机构（）。","options":{"A":"宣布无效","B":"予以撤销","C":"予以变更","D":"予以撤销或变更"},"answer":"B","clips":[[45,"images/c6ba543376366ee1446a16d3.webp"]]},{"n":58,"kind":"单项选择题","stem":"依据《民法典》，解除委托合同，除不可归责于该当事人前事由外，有关当事人损害赔偿请求权说法正确的是（）。","options":{"A":"不论委托合同是有偿或无偿，均应赔偿所有损失","B":"不论委托合同是有偿或无偿，均只需赔偿直接损失","C":"有偿委托合同解除方应当赔偿对方的全部损失","D":"无偿委托合同解除方应当赔偿因解除时间不当造成的直接损失"},"answer":"D","clips":[[46,"images/31975b2aba8f585b82c6e9c7.webp"]]},{"n":59,"kind":"单项选择题","stem":"《民法典》规定，债权人转让债权，（），该转让对债务人不发生效力。","options":{"A":"未通知债务人","B":"未经债务人同意","C":"未与债务人协商确认","D":"未办理登记备案"},"answer":"A","clips":[[46,"images/7e6f3b3da28142baedbedf8f.webp"],[47,"images/df9e16d999de1a48ae36b959.webp"]]},{"n":60,"kind":"单项选择题","stem":"依据《民法典》，当事人一方违约造成对方损失，对方对损失发生有过错，（）。","options":{"A":"可以免除赔偿责任","B":"感当免除赔偿责任","C":"可以减少相应损失赔偿额","D":"应当减少相应损失赔偿额"},"answer":"C","clips":[[48,"images/8a379ed5768957fdfbcd3c13.webp"]]},{"n":61,"kind":"单项选择题","stem":"《民法典》规定，禁止从建筑物中地掷物品。从建筑物中抛掷物品或者从建筑物上坠落物品造成他人损害，（）。","options":{"A":"由侵权人依法承担侵权责任","B":"可能加害的建筑物所有人补偿后，有权向侵权人追偿","C":"物业未采取必要安全保障措施的，应当承担连带责任","D":"难以确定具体侵权人，除能够证明自己不是侵权人的外，由可能加害建筑物所有人给予补偿"},"answer":"A","clips":[[48,"images/178323bc6922aa7322dcc1f2.webp"],[49,"images/60f07343591846fe65a2aee6.webp"]]},{"n":62,"kind":"单项选择题","stem":"依据《民法典》，机动车发生交通事故造成损害，属于该机动车一方责任，赔偿顺序为（）。","options":{"A":"先由侵权人赔偿，再由交强险、商业险依次赔付","B":"先由侵权人赔偿，不足部分由商业险、交强险赔付","C":"先交强险赔付，不足由商业险按合同赔付，仍不足由侵权人赔偿","D":"先交强险赔付，不足由侵权人承担，最后商业险赔付"},"answer":"C","clips":[[49,"images/de6a4502f4a8d0911ac0ae7c.webp"],[50,"images/13fa13d26a8a5f5d1263a9e3.webp"]]},{"n":63,"kind":"单项选择题","stem":"《旅游法》规定，旅行社组织旅游活动应当向（） 供应商订购旅游产品和旅游服务。","options":{"A":"合格","B":"合适","C":"优秀","D":"专业"},"answer":"A","clips":[[50,"images/4d00e7889a126d2db4911419.webp"]]},{"n":64,"kind":"单项选择题","stem":"某旅行社组团出境旅游，但是在出发前两天，发现整团签证时间有误，于是告知旅游者解除旅游合同。那么旅行社应当赔偿旅游者旅游费用总额） 违约金。","options":{"A":"5%","B":"10%","C":"15%","D":"20%"},"answer":"C","clips":[[51,"images/a60c6f5fecce18394b231f21.webp"]]},{"n":65,"kind":"单项选择题","stem":"某旅行社将旅游业务委托给不具有相应资质的旅行社，依据《旅行社条例》，由旅游主管部门责令改正，处（） 钓罚款。","options":{"A":"5000元以上5万元以下","B":"2000元以上2万元以下","C":"2万元以上5万元以下","D":"2万元以上10万元以下"},"answer":"D","clips":[[52,"images/eebef29c38efa40ea4d04844.webp"]]},{"n":66,"kind":"单项选择题","stem":"旅行社招徕、组织、接待旅游者，应当妥善保存旅游者各类合同及相关文件、资料，保存期感当）。","options":{"A":"不少于1年","B":"不少于2年","C":"不少于3年","D":"不少于5年"},"answer":"B","clips":[[52,"images/6a5a1763404fbeccc005eb94.webp"],[53,"images/ed22d35bc8850a86c3b2d352.webp"]]},{"n":67,"kind":"单项选择题","stem":"依据《文化和旅游市场信用管理规定》，失信主体信息应当按照“（）”原则通过全国文化和旅游市场信用管理系统等渠道公开。","options":{"A":"谁管理，谁负责","B":"谁管理，谁公开","C":"谁公开，谁负责","D":"谁认定，谁公开"},"answer":"D","clips":[[53,"images/1967d29bd5d7a7ed59cbba60.webp"]]},{"n":68,"kind":"单项选择题","stem":"在线旅游经营者违反有关规定，为以不合理低价组织的旅游活动者提供交易机会，由县级以上文化和旅游主管部门责令改正，给子警告，可并处（）罚款。","options":{"A":"1万元以下","B":"3万元以下","C":"1万元以上3万元以下","D":"1万元以上5万元以下"},"answer":"B","clips":[[54,"images/9a10d0f12f15365138b0f141.webp"]]},{"n":69,"kind":"单项选择题","stem":"根据《导游管理办法》，导游身份标识中的导游信息发生变化，导游应当自导游信息发生变化之日起 （）内，向所在地旅游主管部门申请更换导游身份标识。","options":{"A":"5日","B":"5个工作日","C":"10 日","D":"10个工作日"},"answer":"D","clips":[[54,"images/ae9172935cf7a834a6a80273.webp"],[55,"images/8ba6ce5212f20057e4f85b41.webp"],[56,"images/d9aec5fdc5748b0cc27ca842.webp"]]},{"n":70,"kind":"单项选择题","stem":"依据《导游管理办法》，下列属于不能颁发导游证情形是）。","options":{"A":"18周岁赵某","B":"患有高血压的李某","C":"孙某曾因过失犯罪受过刑事处罚","D":"导游钱某两年前因违法行为被吊销导游证"},"answer":"D","clips":[[56,"images/ecc003c80b97147442e1a1d7.webp"],[57,"images/c3232586b181c70cb565b170.webp"]]},{"n":71,"kind":"单项选择题","stem":"《旅游法》规定，参加导游资格考试成绩合格，（）人员，可以甲请取得导游证。","options":{"A":"与旅行社订立劳务合同","B":"具有较强应变能力","C":"按受旅行社委托从事导游活动","D":"在相关旅游行业组织注册"},"answer":"D","clips":[[57,"images/6f5f5df37e978169b5563ce9.webp"],[58,"images/cc2c40b2b920227777e0002b.webp"]]},{"n":72,"kind":"单项选择题","stem":"《导游人员管理条例》规定，导游人员在引导旅游者旅行、游览过程中，盛当就可能发生危及旅游者人身、财物安全的情况，向旅游者作出（），并按照旅行社的要求采取防止危害发生的措施。","options":{"A":"真实说明","B":"明确警示","C":"真实说明和明确警示","D":"真实说明或明确警示"},"answer":"C","clips":[[59,"images/7eb57dbee168866d8b770765.webp"]]},{"n":73,"kind":"单项选择题","stem":"依据《消费者权益保护法》，消费者有七日无理由退货的权利，下列商品中可以行使该项权利是（）。","options":{"A":"电话订阅的报刊期刊","B":"网络平台定制纪念卫衣","C":"网上付费下载电子影音资料","D":"电视购物渠道购买钓家用落地风扇"},"answer":"D","clips":[[59,"images/bc5862d90978252268b5aaf5.webp"],[60,"images/e0828c98825e2128649dc866.webp"]]},{"n":74,"kind":"单项选择题","stem":"某旅游者在从甲地飞往乙地的飞机上，使用可能影响导航系统正常功能手机，不听空乘人员韵劝阻。依据《治安管理处罚法》，对该旅游者处罚正确钓是（）。","options":{"A":"5日以下拘留或者500元以下罚款","B":"10日以下拘留或者500元以下罚款","C":"5日以下拘留或者1000元以下罚款","D":"10日以下拘留或者1000元以下罚款"},"answer":"C","clips":[[60,"images/aad8c8e0a61e6e45beaa1bc2.webp"],[61,"images/9e837d02676142fef27dd4f9.webp"],[62,"images/06f10c5e1079b9c9e07c03c1.webp"]]},{"n":75,"kind":"单项选择题","stem":"《旅游投诉处理办法》规定，旅游投诉处理机构盛当在（）内，做出处理。","options":{"A":"接到投诉之日起60日","B":"受理投诉之日起60日","C":"接到投诉之日起 90日","D":"受理投诉之日起 90日"},"answer":"B","clips":[[62,"images/6aff928a5ec39f531d589454.webp"],[63,"images/9312dc499a9f89540233e195.webp"]]},{"n":76,"kind":"单项选择题","stem":"依据《最高人民法院关于审理旅游纠纷案件适用法律若干问题规定》，旅游经营者为旅游者代管行李物品损毁、灭失，旅游者请求赔偿损失萌，人民法院应予以支持。但（）情形除外。","options":{"A":"损失是由于第三人造成的","B":"损失是由于物品自然属性造成","C":"损失是由于旅游经营者过错造成","D":"损失是由于旅游经营者或者旅游辅助服务者未事先声明或者提示，旅游者未将现金、有价证券、贵重物品由其随身携带而造成"},"answer":"B","clips":[[64,"images/f5134bdde2e859f29ce9d82b.webp"],[65,"images/fe4c59abb5d92cad7d622db0.webp"]]},{"n":77,"kind":"单项选择题","stem":"依据《旅游安全管理办法》，经营高风险旅游项目或者向（）提供旅游服务前，感当根据需要采取相应的安全保护措施。","options":{"A":"老幼病残孕","B":"老年人、残疾人、军人","C":"车人、人民警察、消防员","D":"老年人、未成年人、残疾人"},"answer":"D","clips":[[65,"images/d380b5f5f0d09c6ead212268.webp"]]},{"n":78,"kind":"单项选择题","stem":"《旅游安全管理办法》规定，根据可能对旅游者造成危害程度、紧急程度和发展态势，风险提示级别分为一级、二级、三级和四级，其中）为较重级别。","options":{"A":"一级","B":"二级","C":"三级","D":"四级"},"answer":"C","clips":[[66,"images/da63293dc6b554f957480d79.webp"]]},{"n":79,"kind":"单项选择题","stem":"《旅游安全管理办法》规定，旅行社应当将安全信息卡交由旅游者随身携带，并（）血型、过敏药物和重大疾病等信息。","options":{"A":"代替其填写","B":"要求其填写","C":"告知其自行填写","D":"代替其填写或告知其自行填写"},"answer":"C","clips":[[67,"images/cab94799e46bf22cf784bd6e.webp"]]},{"n":80,"kind":"单项选择题","stem":"《突发事件应对法》规定，发布突发事件三级、四级警报后，县级以上地方各级人民政府应当根据即将发生的突发事件钓特点和可能造成的危害，采取下列（）措施。","options":{"A":"责令应急救援队伍、负有特定职责人员进入待命状态","B":"转移、疏散或者撤离易受突发事件危害的人员并予以要善安置，转移重要财产","C":"加强对重点单位、重要部位和重要基础设施钓安全保卫，维护社会治安秩序","D":"定时向社会发布与公众有关突发事件预测信息和分析评估结果，并对相关信息的报道工作进行管理"},"answer":"D","clips":[[68,"images/01279cbf209bfe1f16941349.webp"],[69,"images/93d3b969a3a4b852288aabb1.webp"]]},{"n":81,"kind":"单项选择题","stem":"《旅馆业治安管理办法》规定，旅馆对旅客遗留物品，应当妥善保管，设法归还原主或揭示招领，经招领（） 后无人认领，登记造册，送当地公安机关按拾遗物品处理。","options":{"A":"1个月","B":"3个月","C":"6个月","D":"10个月"},"answer":"B","clips":[[69,"images/81968c0417aaa22ffeae7ac5.webp"]]},{"n":82,"kind":"单项选择题","stem":"《娛乐场所管理条例》规定，娱乐场所申请从事娱乐场所经营活动，应当向所在地县级人民政府（） 提出中请。","options":{"A":"公安部门","B":"城建主管部门","C":"消防主管部门","D":"文化主管部门"},"answer":"D","clips":[[70,"images/225c3be1dd3a618c40ca3629.webp"]]},{"n":83,"kind":"单项选择题","stem":"党二十大报告指出，只有把马克思主义基本原理同（）相结合、同（）相结合，坚持运用辩证唯物主义和历史唯物主义，才能正确回答时代和实践提出的重大问题，才能始终保持马克思主义蓬勃生机和旺盛活力。","options":{"A":"中国具体实际；中国先进文化","B":"中国具体实际：中华优秀传统文化","C":"世界发展形势：中国先进文化","D":"世界发展形势：中华优秀传统文化"},"answer":"B","clips":[[71,"images/aba6b34e707243e91eedc985.webp"],[72,"images/cd1d62dfbe719d74825f0420.webp"]]},{"n":84,"kind":"单项选择题","stem":"改革开放和社会主义现代化建设新时期，中国共产党人以马克思列宁主义和毛泽东思想为指导，深刻总结历史经验和教训，继续探索中国建设社会主义的正确道路，形成中国特色社会主义理论体系，实现了马克思主义中国化前）历史性飞跃。","options":{"A":"第一次","B":"第二次","C":"第三次","D":"第四次"},"answer":"B","clips":[[72,"images/81b85be0fe10f86b5a8eb814.webp"],[73,"images/09a2215d9c7a639a625f721b.webp"]]},{"n":85,"kind":"单项选择题","stem":"党二十大报告指出，全面建设社会主义现代化国家首要任务是（）。","options":{"A":"创新","B":"高质量发展","C":"完成脱贫攻坚","D":"构建新发展格局"},"answer":"B","clips":[[73,"images/75a4a53873a41a2dab025f72.webp"],[74,"images/e574e5638fa19cf260aa5c24.webp"]]},{"n":86,"kind":"单项选择题","stem":"2025年4月16日，习近平总书记在《求是》杂志上发表题为《加快建设文化强国》文章中强调，坚持马克思主义在意识形态领域指导地位根本制度，全面贯彻新时代中国特色社会主义文化思想，发展面向现代化、面向世界、面向未来，（） 社会主义文化。","options":{"A":"世界科学的先进","B":"世界科学的大众","C":"民族现代大众","D":"民族的科学大众"},"answer":"D","clips":[[74,"images/f7fb9479ddb188404345ee15.webp"],[75,"images/db19ecafd8a2562a09de0108.webp"]]},{"n":87,"kind":"单项选择题","stem":"导游必须具备处理各种偶然和意外情况能力，比如要满足（） 需求多样。","options":{"A":"领队","B":"全陪导游","C":"旅游者","D":"旅行社"},"answer":"C","clips":[[75,"images/c6cd974596697df6823815c0.webp"],[76,"images/401e17cdafc45dd38c57dfe8.webp"]]},{"n":88,"kind":"单项选择题","stem":"海外领队带领小学生暑期夏令营赴国外，应侧重对家长引导。这体现了导游领队引导文明旅游规范（）。","options":{"A":"合理引导","B":"分类引导","C":"两项职责","D":"正确沟通"},"answer":"B","clips":[[76,"images/15878eb9f32c454f20fbc9e8.webp"],[77,"images/f14207aa167292e4bf1e6993.webp"]]},{"n":89,"kind":"单项选择题","stem":"标志着我国导游队伍钓建设迈上了法律进程前是","options":{"A":"1985 年发布前《旅行社管理暂行条例》","B":"1994年发布的《导游人员职业等级标准》","C":"1999 年实施钓《导游人员管理条例》","D":"2013 年实施《中华人民共和国旅游法》"},"answer":"C","clips":[[77,"images/ab4b020ae3fb91035109dbc1.webp"],[78,"images/667d20bd7494cf05eef02248.webp"]]},{"n":90,"kind":"单项选择题","stem":"）是地陪导游首次在全体旅游者面前较为正式地展示自己的业务水平和个人魅力，也是地陪导游给全团留下良好第一印象的重要环节。","options":{"A":"致欢迎词","B":"迎接服务","C":"沿途导游","D":"首次途中服务"},"answer":"D","clips":[[78,"images/9919cfab286053207273a978.webp"],[79,"images/0f878b758af8c48c553233bb.webp"]]},{"n":91,"kind":"单项选择题","stem":"关于为他人做介绍的说法中，下列描述正确的是（）。","options":{"A":"先把年长者介绍给年轻者","B":"先把女子介绍给男子","C":"先把主人介绍给客人","D":"先把职位高者介绍给职位低者"},"answer":"C","clips":[[79,"images/6e405c733304a7bb286287e3.webp"],[80,"images/bb829ff5eb450ea99409f44b.webp"]]},{"n":92,"kind":"单项选择题","stem":"发生突发事件之后，导游应本着（）第一原则处理。","options":{"A":"依法依约，合理可能","B":"以人为本，救援第一","C":"平等待客，不卑不亢","D":"及时报告，加强沟通"},"answer":"B","clips":[[80,"images/4cd0c1df401f1bb40c3a1f19.webp"],[81,"images/9d2cb065bbd01c52ac132337.webp"]]},{"n":93,"kind":"单项选择题","stem":"在我国导游服务开拓阶段，导游服务以外事接待工作为主要内容，因此，从事导游服务韵工作人员均被称为（）。","options":{"A":"翻译导游","B":"外事翻译","C":"公务员","D":"事业单位员工"},"answer":"A","clips":[[81,"images/96837591d609c4577ba26a03.webp"],[82,"images/e6373bcdcede8d87e4a859fe.webp"]]},{"n":94,"kind":"单项选择题","stem":"（）一般为旅行社正式职员。","options":{"A":"外语导游","B":"专职导游","C":"全陪导游","D":"高级导游"},"answer":"B","clips":[[82,"images/00a63fab003fc56b56255c63.webp"],[83,"images/98ca1f16cfb26a75ca99945b.webp"]]},{"n":95,"kind":"单项选择题","stem":"交谈时最好有一定的角度，两人可在对方的侧面斜站，形成）角为最佳。","options":{"A":"20°","B":"25°","C":"30°","D":"45°"},"answer":"C","clips":[[83,"images/79902a4b7fbb603fee38d054.webp"]]},{"n":96,"kind":"单项选择题","stem":"执行旅游接待计划是每位导游人员主要责任，但在旅游地具体执行者应是（）。","options":{"A":"全陪导游","B":"地陪导游","C":"领队","D":"全陪导游和地陪号游"},"answer":"B","clips":[[84,"images/9ce96e8970f066e67ab3c14d.webp"]]},{"n":97,"kind":"单项选择题","stem":"（）是作为一名合格中国导游首要条件。","options":{"A":"践行社会主义核心价值观","B":"热爱社会主义祖国","C":"自觉地遵纪守法","D":"优秀道德品质"},"answer":"B","clips":[[84,"images/58375568f06fbb066836fdba.webp"],[85,"images/23444dd0616032c455546308.webp"],[86,"images/96fe0f5b7c4dfc5bd37c4dfc.webp"]]},{"n":98,"kind":"单项选择题","stem":"自（）起，全国铁路旅客运输领域全面使用电子车票。","options":{"A":"2026年1月1日","B":"2025年1月1日","C":"2025年10月1日","D":"2024年10月1日"},"answer":"C","clips":[[86,"images/3dfe5afe132d3f7c15d0eaec.webp"]]},{"n":99,"kind":"单项选择题","stem":"地陪导游在熟悉接待计划时，关于旅游团及成员基本情况，以下不需要重点了解是（）。","options":{"A":"旅游团类型","B":"旅游团交通票据情况","C":"旅游团成员社会阶层","D":"旅游团成员职业"},"answer":"C","clips":[[86,"images/b718d8fbc2147d97c805b57e.webp"],[87,"images/54ae932303a40276789e2738.webp"],[88,"images/46475e2bff7740efe59028ac.webp"]]},{"n":100,"kind":"单项选择题","stem":"“胡雪岩奉行采办务真理念，老百姓都喜欢到胡庆余堂看病抓药，即使葯方还没开，人前病就已经好了三分”。这句话使用的修醉手法是（）。","options":{"A":"引用","B":"夸张","C":"比喻","D":"对比"},"answer":"B","clips":[[89,"images/a51e6427f8e027e514cb179e.webp"]]},{"n":101,"kind":"单项选择题","stem":"（局职责整合，组建文化和旅游部。） 年，根据国务院机构改革方案，将文化部、国家旅游","options":{"A":"2017","B":"2018","C":"2019","D":"2020"},"answer":"B","clips":[[90,"images/6bcc4bd7d2ac6106fd3ba96d.webp"]]},{"n":102,"kind":"单项选择题","stem":"领了接待计划，地陪导游在核对旅游团在当地活动日程时，发现部分内容与接待计划有出入，地陪导游应立即与（） 核实。","options":{"A":"饭店","B":"全陪导游","C":"地接社计调","D":"组团社计调"},"answer":"C","clips":[[90,"images/1679165f95a285857a411ac3.webp"],[91,"images/07ebde701f781412e65c6f30.webp"]]},{"n":103,"kind":"单项选择题","stem":"“先生”“女士”“同志”“师傅”属于称呼哪种类型？（）","options":{"A":"泛尊称型","B":"行政职务型","C":"职业称呼型","D":"职称等级型"},"answer":"A","clips":[[91,"images/6cd4751bd8bc36e0bbb172e0.webp"],[92,"images/0ee844ccf59296a5b4a16f04.webp"]]},{"n":104,"kind":"单项选择题","stem":"在讲解时，导游按照书面导游词中的标点符号所做钓停顿，即为（）。","options":{"A":"感情停顿","B":"语法停顿","C":"生理停顿","D":"逻辑停顿"},"answer":"B","clips":[[92,"images/abc9f2e290d8701bf0d2de42.webp"],[93,"images/c1b42654ae092cccab864407.webp"]]},{"n":105,"kind":"单项选择题","stem":"导游在讲解巫山神女峰自然风光时，穿插介绍巫山神女瑤姬和楚怀王的传说故事。这种导游讲解技巧是（","options":{"A":"虚实结合法","B":"突出重点法","C":"制造悬念法","D":"触景生情法"},"answer":"A","clips":[[94,"images/cab458ead10a3ac75f823e6b.webp"]]},{"n":106,"kind":"单项选择题","stem":"出境游行前说明会通常会在旅游团队出发前（）召开。","options":{"A":"1～3天","B":"3～7天","C":"7～14天","D":"1个月以上"},"answer":"B","clips":[[95,"images/f8731db665fe078382441e95.webp"]]},{"n":107,"kind":"单项选择题","stem":"通过播放音乐、组织歌唱活动或欣赏特色歌舞，调动旅游者情绪前方法是（）。","options":{"A":"以讲解技巧激发游兴","B":"以具体形象激发游兴","C":"以文娱活动激发游兴","D":"以图文声像激发游兴"},"answer":"C","clips":[[96,"images/c564d652bd7f3cd95d5503b3.webp"],[97,"images/fac99d4b165a97473e80df53.webp"]]},{"n":108,"kind":"单项选择题","stem":"“秋天北京是美丽的季节。”这句讲解词主要问题在于（）。","options":{"A":"语音语调不准确","B":"讲解内容不准确","C":"思想观点不准确","D":"遺词造句不准确"},"answer":"D","clips":[[97,"images/614f271ae9ab62b5e88703ad.webp"],[98,"images/7285e434e4b12c9251cf11e0.webp"],[99,"images/3ba92aa63ba5a28ec85d2ada.webp"]]},{"n":109,"kind":"单项选择题","stem":"导游小贝带团时，旅游者临时提出希望当天晚上观看某场演出。小贝告知旅游者当天的票己售罄，但可安排另外一场演出。导游小贝采用了（）拒绝方式。","options":{"A":"婉转拒绝法","B":"拖延时间法","C":"正面回绝法","D":"替代方案法"},"answer":"D","clips":[[99,"images/7d4c945e6e59ba539fb00e09.webp"],[100,"images/7bf4c1a52dd370e5b076fb8a.webp"]]},{"n":110,"kind":"单项选择题","stem":"在巡管过程中，导游应该避免问旅游者哪种类型问题？（","options":{"A":"菜数是否上齐","B":"上菜速度如何","C":"大家觉得这里菜怎么样","D":"口味咸淡酸辣问题"},"answer":"C","clips":[[101,"images/605222985535c8e6cc5b33ae.webp"]]},{"n":111,"kind":"单项选择题","stem":"航空公司图标不仅是企业品牌标志和企业文化钓象征，而且蕴含航空公司独特经营和服务理念。东航标志是（）。","options":{"A":"木棉花","B":"凤凰","C":"飞翔燕子","D":"蓝天和雪山"},"answer":"C","clips":[[101,"images/af58c3d14dde572e456ce54a.webp"],[102,"images/89fe9e04b7e8e7fd12a9bb78.webp"]]},{"n":112,"kind":"单项选择题","stem":"“横看成岭侧成峰，远近高低各不同”。这句诗蕴含的观景赏美方法是（）。","options":{"A":"观赏时机","B":"动态观赏","C":"静态观赏","D":"观赏角度与观赏距离"},"answer":"D","clips":[[103,"images/4aa7b7490a889b601c5abed6.webp"]]},{"n":113,"kind":"单项选择题","stem":"导游在处理旅游接待纠纷时，以下做法正确的是（）。","options":{"A":"首先应遵循迅速解决问题钓原则","B":"处理问题讲求有理、有利、有节","C":"稳定旅游者情绪为主，暂不考虑后续行程安排","D":"做好书面记录，保存书证、物证、日头证言等证据"},"answer":"B","clips":[[104,"images/671d8bf77a7faa26d454d33a.webp"],[105,"images/ab1335588028d22eb4c52a54.webp"]]},{"n":114,"kind":"单项选择题","stem":"下列关于签证描述正确钓是（）。","options":{"A":"R字签证是指发给申请在中国境内工作人员","B":"中国签证分为外交签证、公务签证和普通签证三种","C":"外国人来中国旅游的旅游签证属于普通签证，在中国为L字签证","D":"外交签证的人员可以走“红色通道”"},"answer":"C","clips":[[105,"images/da1db8aaeac7495254dc3d42.webp"],[106,"images/5d872b01dd58f8314b240b7a.webp"]]},{"n":115,"kind":"单项选择题","stem":"根据国航规定，对含酒精液态饮品，酒精的体积百分含量（）时，每位旅客托运总量不得超过5升。","options":{"A":"大于70%","B":"大于24%、小于或等于70%","C":"大于24%、小于 70%","D":"小于或等于 24%"},"answer":"B","clips":[[106,"images/d3418cd4d8eee9b0528cd1ee.webp"],[107,"images/eaf98d81c92b23e2be732fc2.webp"]]},{"n":116,"kind":"单项选择题","stem":"在（）情况下，应满足旅游者调换饭店要求。","options":{"A":"旅游者所住客房低于协议要求","B":"旅游者要住高于协议标准的客房","C":"旅游者要住单间","D":"旅游者不喜欢房间布局"},"answer":"A","clips":[[107,"images/7763b09f7ad591ab67febe0c.webp"],[108,"images/0ad14448348f9e64a064fac6.webp"]]},{"n":117,"kind":"单项选择题","stem":"承运人或者其航空销售代理人应当在收到旅客有效退款申请之日起）个工作日内办理完成退款手续，上述时间不含金融机构处理时间。","options":{"A":"10","B":"7","C":"5","D":"3"},"answer":"B","clips":[[109,"images/9e185d5e52fd22a51e534e3c.webp"]]},{"n":118,"kind":"单项选择题","stem":"港澳居民来往内地通行证，俗称（），由中华人民共和国出入境管理局（即国家移民管理局）签发。","options":{"A":"港澳证","B":"通行证","C":"双程证","D":"回乡证"},"answer":"D","clips":[[109,"images/ca84d7016881b41cc2adefa8.webp"]]},{"n":119,"kind":"单项选择题","stem":"居民旅客出境时，携带需要复带入境的（），座当向海关申报。","options":{"A":"单价2000元的平板电脑","B":"单价3000元照相机","C":"单价4000元的笔记本电脑","D":"单价6000元的摄像机"},"answer":"D","clips":[[110,"images/94f3df6a29ccc119c3d80923.webp"]]},{"n":120,"kind":"单项选择题","stem":"外交护照由（）颁发给中国党、政、军高级官员，全国人民代表大会、中国人民政治协商会议和各民主党派主要领导人，外交官员、领事官员及其随行配偶、未成年子女和外交信使等。","options":{"A":"公安部","B":"外交部","C":"驻外使领馆","D":"驻外机构"},"answer":"B","clips":[[110,"images/f1cdeae1249fccef83a2775d.webp"],[111,"images/74722dcf976cb5e5e0d6a49e.webp"],[112,"images/f03b4256479275c698e6d34d.webp"]]},{"n":121,"kind":"单项选择题","stem":"小贝《大陆居民往来台湾通行证》是2020年办理，其有效期为（）。","options":{"A":"5年","B":"10年","C":"15年","D":"20年"},"answer":"B","clips":[[112,"images/afc84ebc06e94cbf8ce40a72.webp"],[113,"images/2b484fe9480b211ee3fc8f75.webp"]]},{"n":122,"kind":"单项选择题","stem":"儿童（包括免费儿童〉乘坐火车旅行时，可免费携带（）的行李。","options":{"A":"10千克","B":"15千克","C":"20千克","D":"35千克"},"answer":"A","clips":[[113,"images/816593a78112b52173c07150.webp"],[114,"images/a209617438ac0a2834fdc4f3.webp"]]},{"n":123,"kind":"单项选择题","stem":"徒步行进中的休息应遵循“长短结合，短多长少”原则，长时间休息一般每（）一次，每次15～20分钟。","options":{"A":"120分钟以上","B":"90～120分钟","C":"60～90分钟","D":"30～45分钟"},"answer":"C","clips":[[114,"images/5b38b7db90db8f90b03b311e.webp"],[115,"images/96b20131b8627df8b9ec76c3.webp"]]},{"n":124,"kind":"单项选择题","stem":"关于泡温泉时的注意事项，下列说法正确的是（）。","options":{"A":"泡温泉时，可以空腹入浴","B":"泡温泉时，应少喝水","C":"高血压和心脑血管疾病患者严禁泡温泉","D":"出水时，缓慢起身"},"answer":"D","clips":[[115,"images/2d3038954e499e0646d4ca09.webp"]]},{"n":125,"kind":"单项选择题","stem":"（） 是海啸发生最明显的前兆。","options":{"A":"洪水","B":"飓风","C":"地震","D":"泥石流"},"answer":"C","clips":[[116,"images/ae05a038f1bae5bac5a2c4f2.webp"]]},{"n":126,"kind":"单项选择题","stem":"对入境旅游者来说，购买旅游意外保险的保险期限是自旅游者参加旅行社安排的旅游行程开始，至该旅游行程结束，旅游者（） 为止。","options":{"A":"与导游告别","B":"离开最后一站","C":"办理完出境手续","D":"进入飞机舱门"},"answer":"C","clips":[[117,"images/ee57577a309f7e62e518fa4a.webp"]]},{"n":127,"kind":"单项选择题","stem":"一英国旅游者在商场购物时，看中了一种云锦面料，想买9英尺，导游应告诉商场营业员面料的长度约为（）。","options":{"A":"2.29米","B":"2.74米","C":"3.56米","D":"4.62不"},"answer":"B","clips":[[117,"images/3fe221732c9aeb1b61ca8f4e.webp"]]},{"n":128,"kind":"单项选择题","stem":"在旅行过程中遇到歹徒抢劫旅游者事件时，导游首先应该（）。","options":{"A":"保护现场","B":"保护旅游者安全","C":"安抚旅游者情绪","D":"挺身而出与歹徒搏斗"},"answer":"B","clips":[[118,"images/2d7a28854a63b3efbf20a784.webp"],[119,"images/35d9fe5930e5283f61fe9665.webp"]]},{"n":129,"kind":"单项选择题","stem":"下列避雷常识中，描述正确是（）。","options":{"A":"头顶有炸雷，无合适避雷场所时，应找一块地势低地方蹲下，双脚并拢","B":"雷击时，人员尽量靠拢一起，易于被发现","C":"雷击后虽失去意识但仍有呼吸，自行恢复可能性很小，应立即送医院治疗","D":"当雷电出现时，如果人在室内，应打开门窗"},"answer":"A","clips":[[119,"images/41ba51b19b00f1aec4bb4a0f.webp"],[120,"images/6e12147fbeef2efe7957c861.webp"]]},{"n":130,"kind":"单项选择题","stem":"参照国际通行做法，中国所有对外开放口岸对世界各国公民实施“（）小时过境免签政策”。","options":{"A":"144","B":"72","C":"48","D":"24"},"answer":"D","clips":[[120,"images/64cdcd0aadc811d018429d29.webp"],[121,"images/1be3c22aedfca5996f9d3293.webp"]]},{"n":131,"kind":"多项选择题","stem":"我国宪法钓基本原则包括 （）。","options":{"A":"坚持中国共产党领导","B":"人民主权","C":"社会主义法制","D":"权利监督与制约","E":"尊重和保障人权"},"answer":"ABE","clips":[[121,"images/3998b94609339582a7f245f0.webp"],[122,"images/c0f2a90ec3284c597ae404d0.webp"]]},{"n":132,"kind":"多项选择题","stem":"《旅游法》规定，景区超过最大承载量接待旅游者，由景区主管部门（）。","options":{"A":"责令改正","B":"没收违法所得","C":"并处2万-20 万罚款","D":"情节严重，吊销经营许可证","E":"情节严重，责令停业整顿1-6个月"},"answer":"AE","clips":[[122,"images/620d015030cdc057fed7154b.webp"],[123,"images/f19bd7fce2c438d1b9afe3f6.webp"]]},{"n":133,"kind":"多项选择题","stem":"《旅游法》规定，为保护旅游者合法权益，法律规定在订立包价旅游合同时，旅行社应当向旅游者告知韵事项包括（）。","options":{"A":"旅游自费项目内容及价格","B":"旅游活动中安全注意事项","C":"旅游者不适合参加旅游活动情形","D":"旅行社依法可以单方解除合同韵情形","E":"旅游者应当注意的旅游目地相关法律、法规和风俗习惯、宗教禁忌，依照中国法律不宜参加活动等"},"answer":"BCE","clips":[[123,"images/4ddca6da71f61e832422d33e.webp"],[124,"images/5493c5ec1341a6cdf242e01a.webp"]]},{"n":134,"kind":"多项选择题","stem":"《民法典》规定，有下列情形之一的，委托代理终止：）。","options":{"A":"代理期限届满或者代理事务完成","B":"被代理人取消委托或者代理人辞去委托","C":"被代理人恢复完全民事行为能力","D":"代理人或者被代理人死亡","E":"作为代理人或者被代理人的法人、非法人组织终止"},"answer":"ABDE","clips":[[124,"images/c127163b55e5d2a2d196d80f.webp"],[125,"images/9bb7eee666c37a112510b1ac.webp"]]},{"n":135,"kind":"多项选择题","stem":"依据《民法典》，下列属于债权债务终止的情形有（）。","options":{"A":"合同解除","B":"债务已经履行","C":"合同债务转移","D":"债务人依法将标物提存","E":"当事人约定终止其他情形"},"answer":"ABDE","clips":[[126,"images/4ea262b40b0cefc339c31397.webp"]]},{"n":136,"kind":"多项选择题","stem":"旅游者赵某参加旅行社组织的旅游活动，就䬸时去逗未拴牢的烈性犬被咬伤，经查，当地禁止饲养此种烈性犬，饗馆老板的邻居偷偷饲养，暂由餐馆老板照看，导游钱某知道此事，但忙于协调行程安排，没有来得及提醒旅游者，依据《民法典》，下列关于赵某人身损害责任承担说法中，正确是（）。","options":{"A":"导游钱某承担相应补充责任","B":"旅行社承担相应补充责任","C":"仅餐馆老板承担侵权责任","D":"仅管馆老板的邻居承担侵权责任","E":"管馆老板或其邻居承担侵权责任"},"answer":"BE","clips":[[127,"images/022468516f9e90ccb5b7af63.webp"],[128,"images/0804fdebf0874426486f8c24.webp"]]},{"n":137,"kind":"多项选择题","stem":"《旅游法》规定，设立旅行社，招徕、组织、接待旅游者，为其提供旅游服务，应当取得旅游主管部门的许可，下列属于设立旅行社许可条件前有（）。","options":{"A":"有固定经营场所","B":"有必要营业设施","C":"有符合规定的注册资本","D":"有必要经营管理人员和导游","E":"足额缴存旅游服务质量保证金"},"answer":"ABCD","clips":[[128,"images/8a7e35fecdc62d6fb999b11a.webp"],[129,"images/6eb01e0c4a40d0f22b947ae4.webp"]]},{"n":138,"kind":"多项选择题","stem":"《旅行社条例实施细则》规定，旅行社为出境旅游团队委派钓领队，应当符合下列条件（）。","options":{"A":"取得领队证","B":"具有本科以上学历","C":"有相应语言能力","D":"有2年以上旅游相关从业经历","E":"与委派其从事领队业务出境社订立劳动合同"},"answer":"CDE","clips":[[129,"images/6783386c88e3aee1771a7747.webp"],[130,"images/5537681aebcd616fea7e0034.webp"]]},{"n":139,"kind":"多项选择题","stem":"依据《导游人员管理条例》，导游人员存在下列哪些情形，由旅游行政部门责令改正，暂扣导游证3至6个月；情节严重，由省、自治区、直辖市人民政府旅游行政部门吊销导游证并予以公告？（","options":{"A":"擅自增加旅游项目","B":"擅自减少旅游项目","C":"欺骗、胁迫旅游者消费","D":"擅自中止导游活动","E":"擅自变更接待计划"},"answer":"ABDE","clips":[[130,"images/79b6e04961137ebf427d03a2.webp"],[131,"images/151191edce38cdf1d7849512.webp"]]},{"n":140,"kind":"多项选择题","stem":"依据《导游管理办法》，导游服务星级评价是对导游服务水平综合评价，星级评价指标由（）、执业经历和社会评价等构成。","options":{"A":"技能水平","B":"从业年限","C":"学历水平","D":"奖惩情况","E":"学习培训经历"},"answer":"ABDE","clips":[[132,"images/63f81ac7d24025af1d625cb0.webp"]]},{"n":141,"kind":"多项选择题","stem":"《旅游法》规定，旅游者与旅游经营者发生纠纷，可以通过下列途径解决：（）。","options":{"A":"双方协商","B":"向消费者协会申请调解","C":"向检察机关提出申诉","D":"向人民法院提起诉讼","E":"根据与旅游经营者达成的仲裁协议提请仲裁机构仲裁"},"answer":"ABDE","clips":[[133,"images/ae5c926f0209baa209afb0b3.webp"]]},{"n":142,"kind":"多项选择题","stem":"依据《旅行社责任保险管理办法》，下列属于旅行社责任保险保险责任范围的有（）。","options":{"A":"因旅游者过错应当承担赔偿责任","B":"因旅行社疏忽应当承担赔偿责任","C":"因旅行社过失应当承担赔偿责任的","D":"因发生意外事故旅行社应当承担赔偿责任钓","E":"国家旅游局会同中国保险监督管理委员会规定其他情形"},"answer":"BCDE","clips":[[134,"images/7904472d9488cb721d0b36e5.webp"]]},{"n":143,"kind":"多项选择题","stem":"依据《食品安全法》，以下关于食品召回表述正确是（）。","options":{"A":"国家建立食品召回制度","B":"食品生产者发现其生产食品有证据证明可能危害人体健康，应当立即停止生产","C":"食品生产者发现其生产前食品不符合食品安全标准前，应当召回已经上市销售食品","D":"食品生产者召回食品，应当通知相关生产经营者和消费者","E":"食品生产者召回食品，应当记录召回和通知情况"},"answer":"ABCDE","clips":[[135,"images/f482b25b8af28497f60888f5.webp"]]},{"n":144,"kind":"多项选择题","stem":"《自然保护区条例》规定，设立自然保护区感当具有下列条件之）。","options":{"A":"珍稀濒危野生动植物物种的天然集中分布区","B":"具有特殊保护价值海域、海岸、品屿、湿地、内陆水域、森林、草原和荒漠","C":"具有重大科学文化价值地质剖面、地质构造、古生物化石集中分布区、地貌景观、地质灾变遗迹等自然遗迹","D":"典型自然地理区域、自然生态系统区域以及已经遭受破坏但经保护和修复能够恢复的同类自然生态系统区域","E":"经济价值较高、适合大规模开发利用前原生林地"},"answer":"ABCD","clips":[[136,"images/bcf66aefbe722e9958caef97.webp"],[137,"images/f28386593908e7f50b0a03a6.webp"]]},{"n":145,"kind":"多项选择题","stem":"依据《非物质文化遗产法》，非物质文化遗产代表性项目代表性传承人应当符合下列条件：（）。","options":{"A":"具有必要经费","B":"积极开展传承活动","C":"具有必要传承场所","D":"熟练掌握其传承非物质文化遗产","E":"在特定领域内具有代表性，并在一定区域内具有较大影响"},"answer":"BDE","clips":[[137,"images/47d585b25c69463034db8239.webp"],[138,"images/dc03debe688eb601b6b15aff.webp"]]},{"n":146,"kind":"多项选择题","stem":"《文物保护法》规定，本法所称文物，是指人类创造或者与人类活动有关，具有历史、艺术、科学价值下列物质遗存：（）。","options":{"A":"古石刻、古壁画","B":"古文化遗址、古墓外、古建筑、石窟寺","C":"历史上各时代艺术品、工艺美术品","D":"历史上各时代重要钓文献资料、手稿和图书资料","E":"反映历史上各时代、各民族社会制度、社会生产、社会生活前代表性实物"},"answer":"ABDE","clips":[[138,"images/ca20eccb387d8be8ae6f105e.webp"],[139,"images/66d5eeac84c72ef1ae8a04f2.webp"]]},{"n":147,"kind":"多项选择题","stem":"依据《博物馆条例》，设立博物馆，应当具备下列条件：（","options":{"A":"大量藏品以及必要的研究资料，并能够形成陈列展览体系","B":"充足办馆资金和稳定运行经费来源","C":"与其规模和功能相适应专业技术人员","D":"确保观众人身安全的设施、制度及应急预案","E":"固定的馆址以及符合国家规定展室、藏品保管场所"},"answer":"CDE","clips":[[140,"images/0617edd26c817c563bee56dc.webp"]]},{"n":148,"kind":"多项选择题","stem":"下列属于导游服务原则是（）。","options":{"A":"公平合理","B":"平等待客","C":"游客为本","D":"规范化服务","E":"维护旅游者合法权益"},"answer":"BCDE","clips":[[141,"images/1d57795bf052b1404be2471c.webp"]]},{"n":149,"kind":"多项选择题","stem":"下列关于报考中级导游条件，描述正确是（）。","options":{"A":"具有大学专科及以上学历","B":"取得初级导游等级满1年","C":"2年内的带团记录不少于 30次","D":"未被认定为文化和旅游市场失信主体","E":"2年内未因侵害旅游者合法权益受到罚款以上处罚"},"answer":"ADE","clips":[[142,"images/5dc1ba46526e729e18b8486b.webp"]]},{"n":150,"kind":"多项选择题","stem":"对于已成误机（车、船）事故，导游钓补救工作包括）。","options":{"A":"稳定旅游者情绪","B":"提供更周到服务","C":"做好旅行社与旅游者协调工作","D":"协助旅游者投诉交通承载方","E":"做好对下一站通知"},"answer":"ABCE","clips":[[142,"images/2173c4ca65633e124809d31c.webp"],[143,"images/cec2675794fdda0627344aa2.webp"]]},{"n":151,"kind":"多项选择题","stem":"地陪导游在送行阶段，下列做法正确钓是（）。","options":{"A":"致欢送词后，请旅游者填写“导游服务满意度评价表”","B":"旅游团乘坐国内航班时，旅游团一般应提前3小时到达机场","C":"旅游团乘坐出境航班时，由地陪导游办理旅游者的行李托运手续","D":"送出境旅游团，必要时地陪导游可协助旅游者办理购物退税手续","E":"旅游者乘坐出境航班时，地陪导游应送到安检口"},"answer":"ADE","clips":[[144,"images/e766e9c3199f5127771e973c.webp"],[145,"images/ff4380074fcb4e52089033bd.webp"]]},{"n":152,"kind":"多项选择题","stem":"关于预防中暑措施，下列做法正确的是（）。","options":{"A":"涂抹好防晒霜","B":"宜穿浅色宽松服装，材质尽量选化纤类","C":"行程节奏不宜太紧，避免劳累","D":"尽量避免长时间在烈日下活动","E":"提醒旅游者不要等到口渴时才喝水"},"answer":"ACDE","clips":[[145,"images/0838bb51870e64be870f1db9.webp"],[146,"images/d7172cf147b9712442473135.webp"]]},{"n":153,"kind":"多项选择题","stem":"下列属于全陪导游主要职责是（）。","options":{"A":"安排旅游活动","B":"组织协调工作","C":"进行导游讲解","D":"实施旅游按待计划","E":"宜传、调研工作"},"answer":"BDE","clips":[[146,"images/ac7ebd1e3286452354fc00db.webp"],[147,"images/08eaf08bbb13d5db95df89dd.webp"]]},{"n":154,"kind":"多项选择题","stem":"在国际上，旅游购物消费占比是衡量一个国家或地区旅游业是否成熟的重要标志。旅游者购物时，导游提供钓服务符合规范有（）。","options":{"A":"旅游者购买物品体积比较大，不适合随身携带要求导游帮助托运时，应报告旅行社提供帮助","B":"入境旅游者打算购买中葯，应告知我国海关检查的有关规定","C":"严格按照接待计划安排购物，对于不愿参加购物活动的旅游者，要做出妥善安排","D":"如果部分景区存在小贩强拉强卖的现象，地陪导游有责任提前提醒旅游者不要上当受骗，不能放任不管","E":"对不按质论价、以次充好、销售伪劣商品和不提供标准服务前行为，向商店负责人反映"},"answer":"BCDE","clips":[[147,"images/e66af616beca290c244fa8d3.webp"],[148,"images/2c63b2a4495e229a6bf48553.webp"]]},{"n":155,"kind":"多项选择题","stem":"全陪导游接待入境旅游团时，下列关于首站接团服务描述正确有（）。","options":{"A":"全陪导游应在接团前一天与首站接待社联系","B":"首站与地陪导游一起提前1小时到达接站地点","C":"全陪导游要向领队和旅游者问好，进行自我介绍，并介绍地陪导游","D":"与领队核实团队实到人数","E":"全陪导游应该将各站主要安排向旅游者做简要介绍"},"answer":"ACDE","clips":[[149,"images/2b16c41311b029a1d64183bb.webp"],[150,"images/6548ef335e14214a61d8c7d9.webp"]]},{"n":156,"kind":"多项选择题","stem":"导游讲解时语速的快慢取决于（）。","options":{"A":"讲解水平","B":"讲解主体","C":"讲解对象","D":"讲解环境","E":"讲解内容"},"answer":"CDE","clips":[[150,"images/1f8899f037dbbaab8df9efea.webp"],[151,"images/11a379de255816cd10266ae8.webp"]]},{"n":157,"kind":"多项选择题","stem":"导游在带亲子团时，以下做法正确的是（）。","options":{"A":"亲子团即孩子出游，家长陪同一种模式，带好亲子团的关键是服务好孩子","B":"善用讲解技巧，内容表达深入浅出","C":"多采用有情节钓故事，把内容讲得引人入胜","D":"熟悉相关收费标准，协助旅游者做好费用结算","E":"更注重让孩子在游玩中获得知识，更强调让孩子 “游有所学”“学有所成”"},"answer":"BCD","clips":[[151,"images/7b9d6d34b939d4da17ac75a0.webp"],[152,"images/f0d7042573d20da7bc0301b7.webp"]]},{"n":158,"kind":"多项选择题","stem":"地陪导游与全陪导游在协作共事时，正确做法是（）。","options":{"A":"提醒全陪，沿途状况多沟通","B":"找准个人定位，把握好自身职责","C":"给予对方尊重，建立起友情关系","D":"灵活应变，掌握主动权","E":"善于相互学习，营造出积极氛围"},"answer":"BCE","clips":[[152,"images/9d13b38ccc5ca55c8abc22c0.webp"],[153,"images/749f272de273e19623b93a4d.webp"],[154,"images/8be1ec198607f79549b7739c.webp"]]},{"n":159,"kind":"多项选择题","stem":"旅游者晚间要求单独行动，下列导游做法正确的是（）。","options":{"A":"说明为了安全不能同意要求","B":"提醒旅游者随身携带贵重物品","C":"不要太晚回饭店","D":"建议不要去秩序乱的场所","E":"建议不要走得太远"},"answer":"CDE","clips":[[155,"images/2bcb741adf8c18ab26024d2c.webp"]]},{"n":160,"kind":"多项选择题","stem":"境外旅游者因受伤住院治疗，提出延长旅游期限，地陪导游应做好前工作有（）。","options":{"A":"需由旅游者提出书面申请","B":"协助其重新订房、订交通票","C":"协助其办理分离签证或延长签证手续","D":"为其安排人员陪护","E":"请领队劝说其随团出境"},"answer":"ABC","clips":[[155,"images/bf2e8e80f0557dd5a02bd2f4.webp"],[156,"images/a0dd71f2a00fd4189a39996d.webp"]]},{"n":161,"kind":"多项选择题","stem":"根据中国国际航空股份有限公司对行李运输的规定，下列表述正确的有（）。","options":{"A":"生病的宠物狗、宠物猫可以承运","B":"每件手提行李长宽高三边不超过55厘米、40厘米、20 厘米","C":"每件普通托运行李重量不小于2千克，且不超过32千克","D":"头等舱和公务舱手提行李数上限是2件","E":"管制刀具以外菜刀、手术刀、射钉枪等利器都不能托运"},"answer":"BCD","clips":[[156,"images/a7fdfc2aedb93198d1edb579.webp"],[157,"images/8d953af945828d1681f731b1.webp"]]},{"n":162,"kind":"多项选择题","stem":"下列国家的货币中，可在中国境内兑换成人民币的是（）。","options":{"A":"丹麦克朗","B":"加拿大元","C":"澳大利亚元","D":"泰国株","E":"新加坡元"},"answer":"ABCDE","clips":[[158,"images/428e569a83b79d045b661c8b.webp"]]},{"n":163,"kind":"多项选择题","stem":"造成导游漏接的客观原因包括（）。","options":{"A":"导游因看错接站时间而迟到","B":"旅游者乘坐钓航班提前抵达","C":"发生交通堵塞而迟到","D":"旅游者未将自己临时变更后新班次信息告知导游","E":"旅行社未将旅游者临时变动后的交通方式或抵达时间通知导游"},"answer":"BC","clips":[[158,"images/e1464c7c589316a8bdafa216.webp"],[159,"images/df82b1ed81590f471d3052b3.webp"]]},{"n":164,"kind":"多项选择题","stem":"下列饭店中，属于完全服务饭店钓是 （）。","options":{"A":"一星级饭店","B":"二星级饭店","C":"三星级饭店","D":"四星级饭店","E":"五星级饭店"},"answer":"DE","clips":[[159,"images/29ff00d30d3e07b5914e0a33.webp"],[160,"images/20b27a1be2a54dfc6d9b99d6.webp"]]},{"n":165,"kind":"多项选择题","stem":"在海外中国公民林先生不小心将护照丢失，他向所在国中国驻外使领馆申请护照补发，则需要提供）。","options":{"A":"申请表","B":"户口簿","C":"照片","D":"遗失情况说明","E":"国籍状况声明书"},"answer":"ACDE","clips":[[160,"images/b85394fc50dcddb469f2d3b9.webp"],[161,"images/b6659a119299b2cfc8cd4678.webp"]]}]</script>
+<script>
+'use strict';
+const questions=JSON.parse(document.getElementById('question-data').textContent);
+const el=id=>document.getElementById(id);
+const key='beikao-2026-paper6-subject12-quiz-v1';
+const answerText={对:'正确',错:'错误'};
+const sorted=values=>[...values].sort().join('');
+const isCorrect=(q,values)=>sorted(values)===sorted(q.answer);
+let results={}, retryResults={}, retryIds=null, retryOrder={}, position=1, mode="all", selection=new Set();
+try{
+  const state=JSON.parse(localStorage.getItem(key)||'null');
+  if(state){
+    position=Number.isInteger(state.position)&&questions[state.position-1]?state.position:1;
+    if(state.mode==="wrong"||state.mode==="retry")mode=state.mode;
+    if(Array.isArray(state.retryIds))retryIds=new Set(state.retryIds);
+    for(const q of questions){
+      const values=state.results?.[q.n];
+      if(Array.isArray(values)&&values.length&&new Set(values).size===values.length&&values.every(v=>Object.hasOwn(q.options,v))&&(q.kind==='多项选择题'||values.length===1)){
+        results[q.n]=values;
+        const order=state.retryOrder?.[q.n];
+        if(Array.isArray(order)&&sorted(order)===sorted(Object.keys(q.options))){
+          retryOrder[q.n]=order;
+        }
+        const retry=state.retryResults?.[q.n];
+        if(!isCorrect(q,values)&&(!retryIds||retryIds.has(q.n))&&Array.isArray(retry)&&retry.length&&
+           new Set(retry).size===retry.length&&retry.every(v=>Object.hasOwn(q.options,v))&&
+           (q.kind==='多项选择题'||retry.length===1)){
+          retryResults[q.n]=retry;
+        }
+      }
+    }
+  }
+}catch{el('storage').hidden=false;}
+const quizTimer=createQuizTimer(key,()=>questions.every(q=>Boolean(results[q.n])));
+function save(){
+  quizTimer.sync();
+  try{localStorage.setItem(key,JSON.stringify({position,results,retryResults,retryOrder,mode,retryIds:retryIds?[...retryIds]:null}));}
+  catch{el('storage').hidden=false;}
+}
+function wrongQuestions(){
+  return questions.filter(q=>results[q.n]&&!isCorrect(q,results[q.n]));
+}
+function retryQuestions(){
+  return wrongQuestions().filter(q=>!retryIds||retryIds.has(q.n));
+}
+function pool(){
+  if(mode==='all')return questions;
+  return mode==='retry'?retryQuestions():wrongQuestions();
+}
+function optionOrder(q){
+  const letters=Object.keys(q.options);
+  if(mode!=='retry'||q.kind==='判断题')return letters;
+  if(!retryOrder[q.n]){
+    for(let i=letters.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [letters[i],letters[j]]=[letters[j],letters[i]];
+    }
+    retryOrder[q.n]=letters;
+    save();
+  }
+  return retryOrder[q.n];
+}
+function activeResults(){return mode==='retry'?retryResults:results;}
+if(mode!=='all'&&!pool().some(q=>q.n===position)){
+  position=pool()[0]?.n||position;
+}
+let showingReport=mode==='all'&&Object.keys(results).length===questions.length;
+const pointsByType={'判断题':0.5,'单项选择题':0.5,'多项选择题':1};
+
+function renderReport(){
+  let total=0;
+  let maximum=0;
+  const rows=[];
+  for(const [kind,points] of Object.entries(pointsByType)){
+    const section=questions.filter(q=>q.kind===kind);
+    const correct=section.filter(q=>results[q.n]&&isCorrect(q,results[q.n])).length;
+    const score=correct*points;
+    const max=section.length*points;
+    total+=score;
+    maximum+=max;
+    const row=document.createElement('tr');
+    for(const value of [kind,correct,section.length-correct,`${score} / ${max}`]){
+      const cell=document.createElement('td');
+      cell.textContent=value;
+      row.append(cell);
+    }
+    rows.push(row);
+  }
+  el('total-score').textContent=`${total} / ${maximum} 分`;
+  el('subscores').replaceChildren(...rows);
+}
+function focusQuestion(){
+  if(showingReport){
+    el('report-title').focus();
+    return;
+  }
+  (el('options').querySelector('button:not(:disabled)')||el('stem')).focus();
+}
+function jump(n){
+  showingReport=false;
+  position=n;
+  selection.clear();
+  save();
+  render();
+  focusQuestion();
+}
+function render(){
+  const wrong=wrongQuestions();
+  const list=pool();
+  const index=list.findIndex(q=>q.n===position);
+  const q=list[index];
+  const retrying=mode==='retry';
+  const answers=activeResults();
+  el('all').setAttribute('aria-pressed',String(mode==='all'));
+  el('mistakes').setAttribute('aria-pressed',String(mode==='wrong'));
+  const retryList=retryQuestions();
+  const retryCount=Object.keys(retryResults).length;
+  const retryWrong=retryList.filter(q=>retryResults[q.n]&&!isCorrect(q,retryResults[q.n])).length;
+  const roundDone=retryList.length>0&&retryCount===retryList.length;
+  el('retry').hidden=mode==='all'||!retryList.length||(retrying&&(!roundDone||!retryWrong));
+  el('retry').textContent=retrying?'继续重刷 '+retryWrong+' 道错题':retryCount?'查看重刷进度':'重刷错题';
+  el('retry').disabled=retrying&&!roundDone;
+  el('wrong-count').textContent=wrong.length;
+  const answered=Object.keys(results).length;
+  const total=retrying?retryList.length:questions.length;
+  const done=retrying?retryCount:answered;
+  el('progress-label').textContent=`${retrying?'重刷':'已答'} ${done} / ${total}`;
+  el('progress').max=total||1;
+  el('progress').value=done;
+  el('score').textContent=retrying
+    ? `本轮答对 ${done-retryWrong} · 答错 ${retryWrong}${roundDone&&!retryWrong?" · 全部答对":""}`
+    : `整卷答对 ${answered-wrong.length} · 答错 ${wrong.length} · 未答 ${questions.length-answered}`;
+  el('reset').disabled=answered===0;
+  el('show-report').hidden=showingReport||answered!==questions.length;
+  el('report').hidden=!showingReport;
+  el('card').hidden=showingReport;
+  el('index').hidden=showingReport||!q;
+  el('nav').hidden=showingReport||!q;
+  if(showingReport){
+    renderReport();
+    return;
+  }
+  el('options').replaceChildren();
+  el('clips').replaceChildren();
+  el('grid').replaceChildren();
+  el('actions').hidden=true;
+  el('result').hidden=true;
+  el('explanation').hidden=true;
+  el('question-face').hidden=false;
+  el('flip').hidden=true;
+  el('flip').textContent='查看解析 · 空格';
+  if(!q){
+    el('meta').textContent='错题';
+    el('stem').textContent='目前没有错题。';
+    return;
+  }
+  const submitted=answers[q.n];
+  const multi=q.kind==='多项选择题';
+  el('meta').textContent=`第 ${q.n} 题 · ${q.kind}`;
+  el('stem').textContent=q.stem;
+  el('prev').disabled=index===0;
+  el('next').disabled=index===list.length-1;
+  el('original-order').hidden=!retrying||q.kind==='判断题';
+  const order=optionOrder(q);
+  const displayLetters=Object.keys(q.options);
+  for(const [index,letter] of order.entries()){
+    const label=q.options[letter];
+    const button=document.createElement('button');
+    button.type='button';
+    button.className='option';
+    const marked=(submitted||[...selection]).includes(letter);
+    button.setAttribute('aria-pressed',String(marked));
+    button.disabled=Boolean(submitted);
+    if(q.kind!=='判断题'){
+      const prefix=document.createElement('b');
+      prefix.textContent=displayLetters[index];
+      button.append(prefix);
+    }
+    const text=document.createElement('span');
+    text.textContent=label;
+    button.append(text);
+    if(multi&&!submitted){
+      const mark=document.createElement('span');
+      mark.className='flag selection-mark';
+      mark.setAttribute('aria-hidden','true');
+      mark.textContent='✓ 已选';
+      button.append(mark);
+    }
+    if(submitted){
+      const correct=q.answer.includes(letter);
+      if(correct||marked){
+        button.classList.add(correct?'correct':'incorrect');
+        const flag=document.createElement('span');
+        flag.className='flag';
+        flag.textContent=correct?(marked?'已选 · 正确':'正确答案'):'已选 · 错误';
+        button.append(flag);
+      }
+    }else{
+      button.onclick=()=>{
+        if(!multi){selection=new Set([letter]);submit();return;}
+        if(selection.has(letter)){selection.delete(letter);}else{selection.add(letter);}
+        button.setAttribute('aria-pressed',String(selection.has(letter)));
+        el('submit').disabled=selection.size===0;
+      };
+    }
+    el('options').append(button);
+  }
+  if(!submitted&&multi){
+    el('actions').hidden=false;
+    el('submit').disabled=selection.size===0;
+  }
+  if(submitted){
+    const right=isCorrect(q,submitted);
+    const result=el('result');
+    result.classList.toggle('wrong',!right);
+    result.textContent=`${right?'答对了':'答错了'} · 正确答案 ${answerText[q.answer]||order.flatMap((letter,index)=>q.answer.includes(letter)?[displayLetters[index]]:[]).join('、')}`;
+    result.hidden=false;
+    for(const [page,base64] of q.clips){
+      const figure=document.createElement('figure');
+      const img=document.createElement('img');
+      img.src=base64;
+      img.alt=`第 ${q.n} 题原解析，PDF 第 ${page} 页`;
+      const caption=document.createElement('figcaption');
+      caption.textContent=`解析卷第 ${page} 页`;
+      figure.append(img,caption);
+      el('clips').append(figure);
+    }
+    el('flip').hidden=false;
+  }
+  for(const item of list){
+    const b=document.createElement('button');
+    b.textContent=item.n;
+    const values=answers[item.n];
+    const status=values?(isCorrect(item,values)?'答对':'答错'):'未作答';
+    b.setAttribute('aria-label',`第 ${item.n} 题，${status}`);
+    if(values)b.className=isCorrect(item,values)?'right':'wrong';
+    if(item.n===position)b.setAttribute('aria-current','true');
+    b.onclick=()=>{
+      el('index').open=false;
+      jump(item.n);
+    };
+    el('grid').append(b);
+  }
+}
+function submit(){
+  const q=questions[position-1];
+  const answers=activeResults();
+  if(!selection.size||answers[q.n])return;
+  answers[q.n]=[...selection];
+  selection.clear();
+  save();
+  render();
+  el('result').scrollIntoView({block:'nearest'});
+}
+function flipCard(){
+  const showExplanation=el('explanation').hidden;
+  el('question-face').hidden=showExplanation;
+  el('explanation').hidden=!showExplanation;
+  el('flip').textContent=showExplanation?'返回题目 · 空格':'查看解析 · 空格';
+  el(showExplanation?'ex-title':'stem').focus();
+}
+function move(delta){
+  const list=pool();
+  const index=list.findIndex(q=>q.n===position);
+  const target=list[index+delta];
+  if(target)jump(target.n);
+}
+document.addEventListener('keydown',event=>{
+  if(event.defaultPrevented||event.isComposing||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey)return;
+  if(event.target.closest('input, textarea, select, [contenteditable]'))return;
+  if(showingReport)return;
+  const index=el('index');
+  if(event.key==='ArrowUp'||event.key==='ArrowDown'){
+    if(index.open&&index.contains(document.activeElement))return;
+    const options=[...el('options').querySelectorAll('button:not(:disabled)')];
+    if(!options.length)return;
+    event.preventDefault();
+    const current=options.indexOf(document.activeElement);
+    const down=event.key==='ArrowDown';
+    const step=down?1:-1;
+    const next=current<0?(down?0:options.length-1):(current+step+options.length)%options.length;
+    options[next].focus();
+    return;
+  }
+  if(event.key===' '&&!el('flip').hidden&&
+      (!event.target.closest('button, summary, a')||event.target===el('flip'))){
+    event.preventDefault();
+    if(!event.repeat)flipCard();
+    return;
+  }
+  if(event.repeat)return;
+  if(/^[1-5]$/.test(event.key)){
+    if(index.open&&index.contains(document.activeElement))return;
+    const option=el('options').querySelectorAll('.option')[Number(event.key)-1];
+    if(!option||option.disabled)return;
+    if(event.key==='5'&&el('actions').hidden)return;
+    event.preventDefault();
+    option.focus();
+    option.click();
+    return;
+  }
+  const previousQuestion=event.key==='ArrowLeft'||event.key.toLowerCase()==='q';
+  const nextQuestion=event.key==='ArrowRight'||event.key.toLowerCase()==='w';
+  if(previousQuestion||nextQuestion){
+    if(el('nav').hidden||(index.open&&index.contains(document.activeElement)))return;
+    event.preventDefault();
+    move(previousQuestion?-1:1);
+    return;
+  }
+  if(event.key==='Escape'&&!index.hidden){
+    event.preventDefault();
+    if(index.open&&index.contains(document.activeElement)){
+      index.open=false;
+      if(el('explanation').hidden)focusQuestion();
+      else el('ex-title').focus();
+    }else{
+      index.open=true;
+      (index.querySelector('[aria-current="true"]')||index.querySelector('summary')).focus();
+    }
+  }
+  if(event.key!=='Enter'||el('nav').hidden)return;
+  if(event.target.closest('button:not(.option):not(#submit):not(#prev):not(#next), summary, a'))return;
+  event.preventDefault();
+  if(!el('actions').hidden){
+    submit();
+    return;
+  }
+  event.target.closest('.option:not(:disabled)')?.click();
+});
+function showReport(){
+  mode='all';
+  showingReport=true;
+  save();
+  render();
+  focusQuestion();
+}
+el('show-report').onclick=showReport;
+el('flip').onclick=flipCard;
+el('submit').onclick=submit;
+el('prev').onclick=()=>move(-1);
+el('next').onclick=()=>move(1);
+el('mistakes').onclick=()=>{
+  mode='wrong';
+  const list=pool();
+  jump(list.some(q=>q.n===position)?position:list[0]?.n||position);
+};
+el('retry').onclick=()=>{
+  let list=retryQuestions();
+  if(mode==='retry'){
+    if(!list.every(q=>retryResults[q.n]))return;
+    list=list.filter(q=>!isCorrect(q,retryResults[q.n]));
+    if(!list.length)return;
+    retryIds=new Set(list.map(q=>q.n));
+    retryResults={};
+    retryOrder={};
+  }
+  if(!list.length)return;
+  mode='retry';
+  jump((list.find(q=>!retryResults[q.n])||list[0]).n);
+};
+el('all').onclick=()=>{
+  mode='all';
+  jump(position);
+};
+el('reset').onclick=()=>{
+  if(!confirm('清空本卷的答题进度和错题记录？'))return;
+  results={};
+  quizTimer.reset();
+  retryResults={};
+  retryIds=null;
+  retryOrder={};
+  mode='all';
+  jump(1);
+};
+render();
+focusQuestion();
+</script>
+</body>
+</html>
