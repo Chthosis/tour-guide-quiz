@@ -1,0 +1,34 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>导入电脑答题记录</title><style>body{font:17px/1.7 system-ui;background:#191919;color:#eee;margin:0;padding:24px}main{max-width:560px;margin:50px auto}button,a{display:block;padding:14px;margin:20px 0;border:1px solid #888;border-radius:12px;background:#303030;color:#fff;text-align:center;font:inherit}button{width:100%}button:disabled{opacity:.5}small{color:#bbb}</style><main><h1>导入电脑答题记录</h1><p id="status" role="status">正在读取记录…</p><small>导入会覆盖备份中对应卷子的手机记录。如需保留手机现有记录，请先回首页导出。</small><button id="restore" disabled>导入到当前 Chrome</button><a href="./">返回刷题首页</a></main><script>
+(async()=>{
+const status=document.querySelector('#status'),button=document.querySelector('#restore');
+try{
+ const params=new URLSearchParams(location.hash.slice(1)),file=params.get('file'),secret=params.get('key');
+ if(!/^[a-f0-9]{32}$/.test(file)||!/^[A-Za-z0-9_-]{43}$/.test(secret))throw Error();
+ const bytes=Uint8Array.from(atob(secret.replace(/-/g,'+').replace(/_/g,'/')+'='),c=>c.charCodeAt(0));
+ const key=await crypto.subtle.importKey('raw',bytes,'AES-GCM',false,['decrypt']);
+ const response=await fetch('transfers/'+file+'.bin',{cache:'no-store'});if(!response.ok)throw Error();
+ const encrypted=new Uint8Array(await response.arrayBuffer());
+ const raw=await crypto.subtle.decrypt({name:'AES-GCM',iv:encrypted.slice(0,12)},key,encrypted.slice(12));
+ const data=JSON.parse(new TextDecoder().decode(raw));
+ if(data.format!=='tour-guide-records'||data.version!==1||!data.records||typeof data.records!=='object'||Array.isArray(data.records))throw Error();
+ const entries=Object.entries(data.records);if(!entries.length)throw Error();
+ let papers=0,complete=0;
+ for(const [k,v]of entries){
+  if(!/^(beikao|leidada)-2026-paper\d+(?:-subject(?:12|34))?-quiz-v1(?:-elapsed-ms)?$/.test(k)||typeof v!=='string')throw Error();
+  if(k.endsWith('-elapsed-ms')){if(!Number.isFinite(Number(v))||Number(v)<0)throw Error();}
+  else{const state=JSON.parse(v);if(!state.results||typeof state.results!=='object'||Array.isArray(state.results))throw Error();
+   for(const[n,a]of Object.entries(state.results))if(!/^\d+$/.test(n)||!Array.isArray(a)||!a.length||!a.every(x=>/^[A-E对错]$/.test(x)))throw Error();
+   papers++;if(Object.keys(state.results).length===165)complete++;
+  }
+ }
+ status.textContent='电脑备份包含 '+papers+' 份卷子的记录，其中 '+complete+' 份已答完。';button.disabled=false;
+ button.onclick=()=>{
+  if(!confirm('导入会覆盖备份中对应卷子的手机记录，继续吗？'))return;
+  const previous=entries.map(([k])=>[k,localStorage.getItem(k)]);
+  try{for(const[k,v]of entries){localStorage.setItem(k,v);if(localStorage.getItem(k)!==v)throw Error();}
+   button.disabled=true;history.replaceState(null,'',location.pathname);status.textContent='导入完成。点“返回刷题首页”即可继续刷错题。';
+  }catch(e){for(const[k,v]of previous){if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}status.textContent='导入失败，原记录已恢复。';}
+ };
+}catch(e){status.textContent='记录读取失败，请联网后重新打开完整的迁移链接。';}
+})();
+</script></html>
